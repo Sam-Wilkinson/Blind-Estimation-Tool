@@ -31,3 +31,11 @@
 
 en:
   hello: "Hello world"
+  views: 
+    title: "Blind Estimation Tool"
+    static_pages:
+      title: "static"
+      home:
+        title: "Home"
+        content: "This is the home page for the blind estimation tool for tickets that exist on the 'Blue Planet Academy and consulting' youtrack"
+        
