@@ -43,4 +43,6 @@ en:
         pageTitle: "Blind Estimation Tool: Whats up with that?"
         content: "This is the about page for the blind estimation tool for tickets that exist on the 'Blue Planet Academy and consulting' youtrack"
         footer: "p.s. Add a poker game here so people have something to do while they wait for the estimations to come in "
-
+      help:
+        title: "Help"
+        content: "Help page"
