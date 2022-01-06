@@ -1,13 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'static_pages/about', type: :view do
+  before do
+    render
+  end
 
-    before do
-        render
-    end
-
-    it 'shows the title' do
-        expect(rendered).to match(t('views.static_pages.about.pageTitle'))
-    end
-    
+  it 'shows the title' do
+    expect(rendered).to match(t('views.static_pages.about.pageTitle'))
+  end
 end

@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'StaticPages', type: :request do
   describe 'GET /static_pages' do
-
     describe 'Get Home Page' do
       before do
         get home_path
@@ -22,11 +21,11 @@ RSpec.describe 'StaticPages', type: :request do
     end
 
     describe 'Get About Page' do
-      before {get about_path}
+      before { get about_path }
 
       it 'returns success' do
         expect(response).to have_http_status(:success)
-      end  
+      end
 
       it 'renders the about template' do
         expect(response).to render_template('about')
@@ -36,13 +35,13 @@ RSpec.describe 'StaticPages', type: :request do
         expect(response.body).to match(Regexp.escape("#{I18n.t('views.static_pages.about.title')} | #{I18n.t('views.title')}"))
       end
     end
-    
+
     describe 'Get Help Page' do
-      before {get help_path}
+      before { get help_path }
 
       it 'returns success' do
         expect(response).to have_http_status(:success)
-      end  
+      end
 
       it 'renders the help template' do
         expect(response).to render_template('help')
@@ -52,6 +51,5 @@ RSpec.describe 'StaticPages', type: :request do
         expect(response.body).to match(Regexp.escape("#{I18n.t('views.static_pages.help.title')} | #{I18n.t('views.title')}"))
       end
     end
-  
   end
 end
