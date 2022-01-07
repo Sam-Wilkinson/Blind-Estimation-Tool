@@ -96,6 +96,13 @@ GEM
     diff-lcs (1.5.0)
     erubi (1.10.0)
     execjs (2.8.1)
+    factory_bot (6.2.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
+    faker (2.19.0)
+      i18n (>= 1.6, < 2)
     ffi (1.15.4)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -251,6 +258,9 @@ GEM
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.1.0)
+    valid_email2 (4.0.1)
+      activemodel (>= 3.2)
+      mail (~> 2.5)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.0)
@@ -283,6 +293,8 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   devise (~> 4.8.0)
+  factory_bot_rails
+  faker (~> 2.19)
   jbuilder (~> 2.7)
   jquery-rails
   listen (~> 3.3)
@@ -301,6 +313,7 @@ DEPENDENCIES
   sqlite3 (~> 1.4)
   turbolinks (~> 5)
   tzinfo-data
+  valid_email2
   web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.0)

@@ -21,7 +21,9 @@ RSpec.describe 'StaticPages', type: :request do
     end
 
     describe 'Get About Page' do
-      before { get about_path }
+      before do
+        get about_path
+      end
 
       it 'returns success' do
         expect(response).to have_http_status(:success)
@@ -37,7 +39,9 @@ RSpec.describe 'StaticPages', type: :request do
     end
 
     describe 'Get Help Page' do
-      before { get help_path }
+      before do
+        get help_path
+      end
 
       it 'returns success' do
         expect(response).to have_http_status(:success)

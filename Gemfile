@@ -29,12 +29,16 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'bootstrap', '~> 5.1.1'
-gem 'jquery-rails'
 gem 'devise', '~> 4.8.0'
+gem 'jquery-rails'
+
+gem 'valid_email2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails'
+  gem 'faker', '~> 2.19'
   gem 'rails-controller-testing', '~> 1.0'
   gem 'rspec-rails', '~> 5.0'
 end

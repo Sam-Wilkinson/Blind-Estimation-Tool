@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    
-    <title> <%= yield(:title) %> | <%= t("views.title")%></title>
+    <title> <%= yield(:title) %> | <%= t("views.title")%> </title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application' , media: 'all' , 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application' , 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
+    <%= render 'shared/header' %>
+    <% flash.each do |key, value| %>
+      <div class="alert flash-bar alert-<%= flash_key_mapping(key) %> alert-dismissible" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <%= value.html_safe %>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>
