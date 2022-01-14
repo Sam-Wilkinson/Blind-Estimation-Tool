@@ -5,3 +5,23 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+def seed_dummy_users_with_rooms(user_amount = 5, room_amount_per_user = 2)
+  (user_amount - User.count).times do
+    FactoryBot.create(:user_with_rooms, rooms_count: room_amount_per_user)
+  end
+end
+
+def seed_users_into_rooms(users_per_room = 3)
+  return unless User.count > users_per_room
+
+  Room.all.each do |room|
+    users = User.where.not(id: room.admin)
+    users = users.limit(users_per_room).order('RANDOM()')
+    room.users << users
+  end
+end
+
+FactoryBot.create(:user, username: 'SamWilkinson', email: 'sam.wilkinson@blue-planet.be', password: 'admin1')
+seed_dummy_users_with_rooms
+seed_users_into_rooms
