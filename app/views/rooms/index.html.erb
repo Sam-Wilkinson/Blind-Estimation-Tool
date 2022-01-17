@@ -1,0 +1,33 @@
+<div class='container-fluid'>
+  <h1><%= t('views.rooms.index.title') %></h1>
+  <%= render partial: 'rooms/form', locals: { room: @room } %>
+  <% if @rooms.blank? %>
+    <h5><%= t('views.rooms.index.available_rooms.no_rooms') %></h5>
+  <% else %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col"><%= t('active_record.attributes.room.name') %></th>
+          <th scope="col"><%= t('active_record.attributes.room.admin') %></th>
+          <th scope="col"><%= t('views.rooms.index.table.titles.options') %></th>
+        </thead>
+        <tbody>
+          <% @rooms.each do |room| %>
+            <tr>
+              <th scope="row"><%= room.id %></th>
+              <td><%= room.name %></td>
+              <td><%= room.admin.username %></td>
+              <td>
+                <% if room.users.include?(current_user) %>
+                  <%= link_to t('views.rooms.index.buttons.enter'), room_path(room), type: 'button', class: 'btn btn-danger' %>
+                <% else %>
+                  <button type='button', class='btn btn-success'><%= t('views.rooms.index.buttons.join') %></button>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>

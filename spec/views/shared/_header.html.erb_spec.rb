@@ -18,6 +18,10 @@ RSpec.describe 'shared/_header', type: :view do
     it 'shows the help link' do
       expect(rendered).to match(help_path)
     end
+
+    it 'shows the rooms link' do
+      expect(rendered).to match(rooms_path)
+    end
   end
 
   describe 'when user not logged in' do

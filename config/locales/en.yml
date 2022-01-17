@@ -52,11 +52,37 @@ en:
         options: 
           create: "Create"
         no_values: "Create some estimation values by pressing on the create button!"
+    rooms:
+      index:
+        title: "Rooms"
+        table:
+          titles:
+            options: "Options"
+        buttons:
+          join: "Join"
+          create: "Create"
+          enter: "Enter"
+        available_rooms:
+          no_rooms: "Apologies!, there are no rooms available"
+  users:
+    options:
+      edit: "Edit"
+      signout: "Sign-out"
+      login: "Login"
+      signup: "Sign-up"
+      signup: "Sign-up"
   active_record:
     models:
+      room: "Room"
       estimations:
         values: "EstimationValue"
     attributes:
+      room:
+        name: "Name"
+        admin: "Admin"
+      user:
+        username: "Username"
+        email: "Email"
       estimations:
         values:
           value: "Value"
@@ -67,9 +93,3 @@ en:
       user:
         username: "Username"
         email: "Email" 
-  users:
-    options:
-      edit: "Edit"
-      signout: "Sign-out"
-      login: "Login"
-      signup: "Sign-up"
