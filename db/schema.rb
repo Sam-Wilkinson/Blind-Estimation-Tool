@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_14_123016) do
+ActiveRecord::Schema.define(version: 2022_01_17_132934) do
+
+  create_table "estimation_values", force: :cascade do |t|
+    t.integer "value"
+    t.integer "placement"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["placement"], name: "index_estimation_values_on_placement", unique: true
+    t.index ["value"], name: "index_estimation_values_on_value", unique: true
+  end
 
   create_table "rooms", force: :cascade do |t|
     t.string "name"
