@@ -1,6 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe 'shared/_header', type: :view do
+  describe 'when displaying header' do
+    before do
+      allow(view).to receive(:current_user).and_return(nil)
+      render
+    end
+
+    it 'shows the home link' do
+      expect(rendered).to match(home_path)
+    end
+
+    it 'shows the about link' do
+      expect(rendered).to match(about_path)
+    end
+
+    it 'shows the help link' do
+      expect(rendered).to match(help_path)
+    end
+  end
+
   describe 'when user not logged in' do
     before do
       allow(view).to receive(:current_user).and_return(nil)

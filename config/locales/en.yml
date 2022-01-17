@@ -46,3 +46,9 @@ en:
       help:
         title: "Help"
         content: "Help page"
+  users:
+    options:
+      edit: "Edit"
+      signout: "Sign-out"
+      login: "Login"
+      signup: "Sign-up"
