@@ -46,6 +46,27 @@ en:
       help:
         title: "Help"
         content: "Help page"
+    estimations:
+      values:
+        title: "Estimation Values"
+        options: 
+          create: "Create"
+        no_values: "Create some estimation values by pressing on the create button!"
+  active_record:
+    models:
+      estimations:
+        values: "EstimationValue"
+    attributes:
+      estimations:
+        values:
+          value: "Value"
+          placement: "Placement"
+      room:
+        name: "Name"
+        admin: "Admin"
+      user:
+        username: "Username"
+        email: "Email" 
   users:
     options:
       edit: "Edit"

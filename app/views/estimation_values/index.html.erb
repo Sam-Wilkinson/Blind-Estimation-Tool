@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="d-flex justify-content-between">
+    <h1><%= t('views.estimations.values.title')%> </h1>
+    <button type="button" class="btn btn-warning"><%= t('views,estimations.options.create')%> </button>
+  </div>
+  <% if @estimation_values.blank? %>
+    <h3> <%= t('views.estimations.values.no_values') %> </h3>
+  <% else %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col"><%= t('active_record.attributes.estimations.values.placement')%></th>
+        <th scope="col"><%= t('active_record.attributes.estimations.values.value')%></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @estimation_values.each_with_index do |estimation_value, index| %>
+        <tr>
+          <td> <%=estimation_value.placement%> </td>
+          <td><%= estimation_value.value %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+    <% end %>
+</div>
