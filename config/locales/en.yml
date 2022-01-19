@@ -67,6 +67,20 @@ en:
           enter: "Enter"
         available_rooms:
           no_rooms: "Apologies!, there are no rooms available"
+      show:
+        table:
+          titles:
+            estimation: "Estimation"
+            kick: "Kick"
+          options:
+            already_estimated: "You have estimated"
+            estimate: "Estimate" 
+        buttons:
+          leave: "Leave"
+          destroy: "Close room"
+        other_users:
+          no_users: "You are alone in this room"
+          call_to_action: "Invite others to join!"
   users:
     options:
       edit: "Edit"

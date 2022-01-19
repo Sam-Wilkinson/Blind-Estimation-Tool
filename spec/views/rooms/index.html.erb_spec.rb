@@ -20,8 +20,8 @@ RSpec.describe 'rooms/index', type: :view do
     end
   end
 
-  context 'when there are rooms' do
-    let(:rooms) {create_list(:room, 5)}
+  context 'when there are rooms show' do
+    let(:rooms) { create_list(:room, 5) }
 
     before do
       assign(:rooms, rooms)

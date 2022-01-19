@@ -19,7 +19,7 @@
               <td><%= room.name %></td>
               <td><%= room.admin.username %></td>
               <td>
-                <% if room.users.include?(current_user) %>
+                <% if room.include?(current_user) %>
                   <%= link_to t('views.rooms.index.buttons.enter'), room_path(room), type: 'button', class: 'btn btn-danger' %>
                 <% else %>
                   <button type='button', class='btn btn-success'><%= t('views.rooms.index.buttons.join') %></button>
