@@ -18,6 +18,23 @@ RSpec.describe 'estimation_values/index', type: :view do
     end
   end
 
+  it 'contains the modal for creating estimation values' do
+    render
+    expect(response).to render_template(partial: '_create')
+  end
+
+  context 'when showing the modal _create' do
+    it 'shows the value field' do
+      render
+      expect(rendered).to match(t('active_record.attributes.estimations.values.value'))
+    end
+
+    it 'shows the placement field' do
+      render
+      expect(rendered).to match(t('active_record.attributes.estimations.values.placement'))
+    end
+  end
+
   context 'when there are estimation_values' do
     let(:estimation_values) { create_list(:estimation_value, 2) }
 

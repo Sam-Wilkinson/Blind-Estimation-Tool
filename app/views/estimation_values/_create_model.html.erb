@@ -1,0 +1,26 @@
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createModalLabel">Estimation value</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with(model: @estimation_value, local: true) do |f| %>
+          <div class="d-flex-col">
+            <%= f.label :value, class: "form-label" %>
+            <%= f.number_field :value, class: "form-control" %>
+          </div>
+          <div class="d-flex-col">
+            <%= f.label :placement, class: "form-label" %>
+            <%= f.number_field :placement, class: "form-control" %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <%= f.submit t('views.estimations.values.options.create'), class: "btn btn-warning" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

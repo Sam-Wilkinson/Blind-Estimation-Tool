@@ -52,6 +52,9 @@ en:
         options: 
           create: "Create"
         no_values: "Create some estimation values by pressing on the create button!"
+        flash_messages:
+          success: "Estimation was successfully created."
+          failure: "Nope, try again"
     rooms:
       index:
         title: "Rooms"

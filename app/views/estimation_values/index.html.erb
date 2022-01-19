@@ -1,26 +1,31 @@
+<%= render partial: 'create_model', locals: { estimation_value: @estimation_value } %>
 <div class="container">
   <div class="d-flex justify-content-between">
     <h1><%= t('views.estimations.values.title')%> </h1>
-    <button type="button" class="btn btn-warning"><%= t('views,estimations.options.create')%> </button>
+    <div>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+        <%= t('views.estimations.values.options.create') %>
+      </button>
+    </div>
   </div>
   <% if @estimation_values.blank? %>
     <h3> <%= t('views.estimations.values.no_values') %> </h3>
   <% else %>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col"><%= t('active_record.attributes.estimations.values.placement')%></th>
-        <th scope="col"><%= t('active_record.attributes.estimations.values.value')%></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @estimation_values.each_with_index do |estimation_value, index| %>
+    <table class="table">
+      <thead>
         <tr>
-          <td> <%=estimation_value.placement%> </td>
-          <td><%= estimation_value.value %></td>
+          <th scope="col"><%= t('active_record.attributes.estimations.values.placement')%></th>
+          <th scope="col"><%= t('active_record.attributes.estimations.values.value')%></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-    <% end %>
+      </thead>
+      <tbody>
+        <% @estimation_values.each do |estimation_value| %>
+          <tr>
+            <td> <%=estimation_value.placement%> </td>
+            <td><%= estimation_value.value %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
 </div>
