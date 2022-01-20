@@ -55,5 +55,12 @@ RSpec.describe 'estimation_values/index', type: :view do
       expect(rendered).to match(estimation_values.second.value.to_s)
       expect(rendered).to match(estimation_values.second.placement.to_s)
     end
+
+    it 'shows the delete estimation_value button' do
+      render
+      expect(rendered).to match(t('views.estimations.values.options.delete'))
+      expect(rendered).to match(estimation_values_path)
+    end
+
   end
 end

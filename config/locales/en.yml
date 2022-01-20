@@ -51,10 +51,14 @@ en:
         title: "Estimation Values"
         options: 
           create: "Create"
+          delete: "Delete"
         no_values: "Create some estimation values by pressing on the create button!"
         flash_messages:
-          success: "Estimation was successfully created."
-          failure: "Nope, try again"
+          create:
+            success: "Estimation was successfully created."
+            failure: "Nope, try again"
+          delete:
+            success: "Estimation was successfully deleted"
     rooms:
       index:
         title: "Rooms"

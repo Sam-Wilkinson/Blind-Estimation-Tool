@@ -55,5 +55,25 @@ RSpec.describe 'EstimationValues', type: :request do
         end
       end
     end
+
+    describe 'delete estimation_value' do
+      let(:estimation_value) { create(:estimation_value) }
+
+      it 'deletes the estimation_value' do
+        delete estimation_value_path(estimation_value)
+        expect(EstimationValue.all).not_to include(estimation_value)
+      end
+
+      it 'redirects to estimation index' do
+        delete estimation_value_path(estimation_value)
+        expect(response).to redirect_to(estimation_values_path)
+      end
+
+      it 'flashes a success message' do
+        delete estimation_value_path(estimation_value)
+        follow_redirect!
+        expect(response.body).to match(I18n.t('views.estimations.values.flash_messages.delete.success'))
+      end
+    end
   end
 end
