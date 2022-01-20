@@ -62,6 +62,7 @@ RSpec.describe 'rooms/index', type: :view do
     it 'shows the room join button' do
       render
       expect(rendered).to match(t('views.rooms.index.buttons.join'))
+      expect(rendered).to match(join_room_path(room))
     end
   end
 

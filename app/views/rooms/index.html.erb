@@ -22,7 +22,7 @@
                 <% if room.include?(current_user) %>
                   <%= link_to t('views.rooms.index.buttons.enter'), room_path(room), type: 'button', class: 'btn btn-danger' %>
                 <% else %>
-                  <button type='button', class='btn btn-success'><%= t('views.rooms.index.buttons.join') %></button>
+                  <%= link_to t('views.rooms.index.buttons.join'), join_room_path(room), method: 'post', type: 'button', class: 'btn btn-success' %>
                 <% end %>
               </td>
             </tr>

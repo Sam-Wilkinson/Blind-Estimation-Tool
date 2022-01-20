@@ -81,6 +81,11 @@ en:
         other_users:
           no_users: "You are alone in this room"
           call_to_action: "Invite others to join!"
+      actions:
+        join_room: 
+          success: "Welcome!"
+          middling: "You were already in!"
+          failure: "Sorry, try again!"
   users:
     options:
       edit: "Edit"

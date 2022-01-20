@@ -55,4 +55,54 @@ RSpec.describe 'Rooms', type: :request do
       end
     end
   end
+
+  describe 'join room' do
+    let(:admin) { create(:user) }
+    let(:room) { create(:room, admin: admin) }
+
+    it 'doesnt add the admin to the rooms users' do
+      sign_in(admin)
+      post join_room_path(room)
+      expect(room.users).not_to include(admin)
+    end
+
+    context 'when user is not admin' do
+      before do
+        sign_in(user)
+      end
+
+      it 'adds the user to the rooms users' do
+        post join_room_path(room)
+        expect(room.users.all).to include(user)
+      end
+
+      context 'when successful' do
+        it 'flashes a success message' do
+          post join_room_path(room)
+          expect(response.body).to match(I18n.t('views.rooms.actions.join_room.success'))
+        end
+
+        it 'enters the room' do
+          post join_room_path(room)
+          expect(response).to render_template('rooms/show')
+        end
+      end
+
+      context 'when user is already in the room' do
+        before do
+          room.users << user
+        end
+
+        it 'flashes a warning message' do
+          post join_room_path(room)
+          expect(response.body).to match(I18n.t('views.rooms.actions.join_room.middling'))
+        end
+
+        it 'enters the room' do
+          post join_room_path(room)
+          expect(response).to render_template('rooms/show')
+        end
+      end
+    end
+  end
 end
