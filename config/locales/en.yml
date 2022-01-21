@@ -51,12 +51,16 @@ en:
         title: "Estimation Values"
         options: 
           create: "Create"
+          update: "Update"
           delete: "Delete"
         no_values: "Create some estimation values by pressing on the create button!"
         flash_messages:
           create:
             success: "Estimation was successfully created."
             failure: "Nope, try again"
+          update:
+            success: "Estimation value was successfully updated"
+            failure: "Sorry! failed to update estimation value"
           delete:
             success: "Estimation was successfully deleted"
     rooms:

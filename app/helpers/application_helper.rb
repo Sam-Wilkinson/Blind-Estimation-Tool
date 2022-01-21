@@ -3,6 +3,7 @@ module ApplicationHelper
     {
       notice: 'success',
       warning: 'warning',
+      info: 'info',
       alert: 'danger'
     }[key.to_sym]
   end

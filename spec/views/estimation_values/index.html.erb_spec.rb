@@ -62,5 +62,15 @@ RSpec.describe 'estimation_values/index', type: :view do
       expect(rendered).to match(estimation_values_path)
     end
 
+    it 'contains the modal for updating estimation values' do
+      render
+      expect(response).to render_template(partial: '_update_model', count: 2)
+    end
+
+    it 'shows the update estimation_value button' do
+      render
+      expect(rendered).to match(t('views.estimations.values.options.update'))
+      expect(rendered).to match(estimation_values_path)
+    end
   end
 end

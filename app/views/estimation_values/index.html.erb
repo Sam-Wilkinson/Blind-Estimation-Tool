@@ -1,4 +1,4 @@
-<%= render partial: 'create_model', locals: { estimation_value: @estimation_value } %>
+<%= render partial: 'modal', locals: { estimation_value: EstimationValue.new, modalName: 'createModal', method: :post, path: estimation_values_path, submit_button_content: t('views.estimations.values.options.create')} %>
 <div class="container">
   <div class="d-flex justify-content-between">
     <h1><%= t('views.estimations.values.title')%> </h1>
@@ -23,10 +23,16 @@
           <tr>
             <td> <%=estimation_value.placement%> </td>
             <td><%= estimation_value.value %></td>
-            <td><%= link_to t('views.estimations.values.options.delete'), estimation_value_path(estimation_value) ,method: 'delete', type: 'button', class: 'btn btn-danger' %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
-</div>
+            <td>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal<%=estimation_value.id%>">
+                <%= t('views.estimations.values.options.update') %>
+              </button>
+              </td>
+              <td><%= link_to t('views.estimations.values.options.delete'), estimation_value_path(estimation_value) ,method: 'delete', type: 'button', class: 'btn btn-danger' %></td>
+              <%= render partial: 'modal', locals: { estimation_value: estimation_value, modalName: "updateModal#{estimation_value.id}", method: :patch, path: estimation_value_path(estimation_value), submit_button_content: t('views.estimations.values.options.update') } %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>

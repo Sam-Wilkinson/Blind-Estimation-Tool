@@ -75,5 +75,32 @@ RSpec.describe 'EstimationValues', type: :request do
         expect(response.body).to match(I18n.t('views.estimations.values.flash_messages.delete.success'))
       end
     end
+
+    describe 'update estimation_value' do
+      let(:estimation_value) { create(:estimation_value) }
+
+      it 'updates estimation of the estimation_value' do
+        patch estimation_value_path(estimation_value,
+                                    estimation_value: { value: estimation_value.value, placement: (estimation_value.placement + 1) })
+        expect(EstimationValue.find(estimation_value.id).placement).not_to eq(estimation_value.placement)
+      end
+
+      it 'updates the value of the estimation_value' do
+        patch estimation_value_path(estimation_value,
+                                    estimation_value: { value: (estimation_value.value + 1), placement: estimation_value.placement })
+        expect(EstimationValue.find(estimation_value.id).value).not_to eq(estimation_value.value)
+      end
+
+      it 'redirects to the index page' do
+        patch estimation_value_path(estimation_value, estimation_value: { value: estimation_value.value, placement: estimation_value.placement })
+        expect(response).to redirect_to estimation_values_path
+      end
+
+      it 'flashes a success message' do
+        patch estimation_value_path(estimation_value, estimation_value: { value: estimation_value.value, placement: estimation_value.placement })
+        follow_redirect!
+        expect(response.body).to match(I18n.t('views.estimations.values.flash_messages.update.success'))
+      end
+    end
   end
 end
