@@ -86,6 +86,9 @@ en:
           success: "Welcome!"
           middling: "You were already in!"
           failure: "Sorry, try again!"
+        leave_room:
+          success: "Bye!"
+          failure: "Sorry, it did not work"
   users:
     options:
       edit: "Edit"

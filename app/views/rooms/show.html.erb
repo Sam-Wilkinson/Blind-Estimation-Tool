@@ -8,7 +8,7 @@
     <% if @room.admin == current_user %>
       <button type="button" class="btn btn-danger float-end"><%= t('views.rooms.show.buttons.destroy') %> </button>
     <% else %>
-      <button type="button" class="btn btn-danger float-end"><%= t('views.rooms.show.buttons.leave') %> </button>
+      <%= link_to t('views.rooms.show.buttons.leave'), leave_room_path(@room), method: 'post', type: 'button', class: 'btn btn-danger float-end' %>
     <% end%>
     <table class="table">
       <thead>

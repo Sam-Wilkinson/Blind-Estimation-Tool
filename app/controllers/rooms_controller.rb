@@ -25,4 +25,14 @@ class RoomsController < ApplicationController
     flash[:notice] = t('views.rooms.actions.join_room.success')
     render 'show'
   end
+
+  def leave
+    room = Room.find(params[:id])
+    if room.users.exclude?(current_user)
+      redirect_to rooms_path, alert: t('views.rooms.actions.leave_room.failure')
+    else
+      room.users.delete(current_user)
+      redirect_to rooms_path, notice: t('views.rooms.actions.leave_room.success')
+    end
+  end
 end
