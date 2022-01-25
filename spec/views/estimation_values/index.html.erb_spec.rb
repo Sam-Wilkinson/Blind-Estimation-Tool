@@ -20,7 +20,7 @@ RSpec.describe 'estimation_values/index', type: :view do
 
   it 'contains the modal for creating estimation values' do
     render
-    expect(response).to render_template(partial: '_create_model')
+    expect(response).to render_template(partial: '_modal')
   end
 
   context 'when showing the modal _create' do
@@ -64,7 +64,7 @@ RSpec.describe 'estimation_values/index', type: :view do
 
     it 'contains the modal for updating estimation values' do
       render
-      expect(response).to render_template(partial: '_update_model', count: 2)
+      expect(response).to render_template(partial: '_modal', count: 3)
     end
 
     it 'shows the update estimation_value button' do
