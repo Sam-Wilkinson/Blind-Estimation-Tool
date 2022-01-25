@@ -26,7 +26,7 @@ def seed_estimation_values(amount = 10)
   amount.times { |i| FactoryBot.create(:estimation_value, placement: i) }
 end
 
-FactoryBot.create(:user, username: 'SamWilkinson', email: 'sam.wilkinson@blue-planet.be', password: 'admin1')
+FactoryBot.create(:user, username: 'SamWilkinson', email: 'sam.wilkinson@blue-planet.be', password: 'admin1', isAdmin: true)
 seed_dummy_users_with_rooms
 seed_users_into_rooms
 seed_estimation_values

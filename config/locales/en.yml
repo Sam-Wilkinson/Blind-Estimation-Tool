@@ -63,6 +63,8 @@ en:
             failure: "Sorry! failed to update estimation value"
           delete:
             success: "Estimation was successfully deleted"
+          access:
+            denied: "I am sorry, you are not permitted"
     rooms:
       index:
         title: "Rooms"

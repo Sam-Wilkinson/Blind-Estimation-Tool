@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'EstimationValues', type: :request do
   let(:user) { create(:user) }
+  let(:admin) { create(:user, isAdmin: true) }
 
   context 'when the user is not logged in' do
     it 'redirects to the log in page' do
@@ -10,9 +11,26 @@ RSpec.describe 'EstimationValues', type: :request do
     end
   end
 
-  context 'when user is logged in' do
+  context 'when the user is not website admin' do
     before do
       sign_in(user)
+    end
+
+    it 'redirects to the root page' do
+      get estimation_values_path
+      expect(response).to redirect_to root_path
+    end
+
+    it 'flashes an error message' do
+      get estimation_values_path
+      follow_redirect!
+      expect(response.body).to include(I18n.t('views.estimations.values.flash_messages.access.denied'))
+    end
+  end
+
+  context 'when admin is logged in' do
+    before do
+      sign_in(admin)
     end
 
     describe 'GET /index' do
@@ -38,7 +56,7 @@ RSpec.describe 'EstimationValues', type: :request do
           follow_redirect!
 
           expect(response).to render_template(:index)
-          expect(response.body).to include(I18n.t('views.estimations.values.flash_messages.success'))
+          expect(response.body).to include(I18n.t('views.estimations.values.flash_messages.create.success'))
         end
       end
 
@@ -51,7 +69,7 @@ RSpec.describe 'EstimationValues', type: :request do
           follow_redirect!
 
           expect(response).to render_template(:index)
-          expect(response.body).to include(I18n.t('views.estimations.values.flash_messages.failure'))
+          expect(response.body).to include(I18n.t('views.estimations.values.flash_messages.create.failure'))
         end
       end
     end
@@ -83,12 +101,14 @@ RSpec.describe 'EstimationValues', type: :request do
         patch estimation_value_path(estimation_value,
                                     estimation_value: { value: estimation_value.value, placement: (estimation_value.placement + 1) })
         expect(EstimationValue.find(estimation_value.id).placement).not_to eq(estimation_value.placement)
+        expect(EstimationValue.find(estimation_value.id).placement).to eq(estimation_value.placement + 1)
       end
 
       it 'updates the value of the estimation_value' do
         patch estimation_value_path(estimation_value,
                                     estimation_value: { value: (estimation_value.value + 1), placement: estimation_value.placement })
         expect(EstimationValue.find(estimation_value.id).value).not_to eq(estimation_value.value)
+        expect(EstimationValue.find(estimation_value.id).value).to eq(estimation_value.value + 1)
       end
 
       it 'redirects to the index page' do

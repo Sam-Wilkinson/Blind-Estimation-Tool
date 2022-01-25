@@ -3,6 +3,7 @@ FactoryBot.define do
     username { Faker::Internet.username }
     email { Faker::Internet.email }
     password { 'testtest' }
+    isAdmin { false }
 
     factory :user_with_rooms do
       transient do
