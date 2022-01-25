@@ -2,11 +2,11 @@
   <% if @room.users.blank? %>
     <h5><%= t('views.rooms.show.other_users.no_users') %></h5>
     <h5><%= t('views.rooms.show.other_users.call_to_action') %></h5>
-    <button type="button" class="btn btn-danger float-end"><%= t('views.rooms.show.buttons.destroy') %> </button>
+      <%= link_to t('views.rooms.show.buttons.destroy'), room_path(@room), method: 'delete', type: 'button', class: 'btn btn-danger float-end'%>
   <% else %>
     <button type="button" class="btn btn-success float-start"><%= t('views.rooms.show.table.options.estimate') %></button>
     <% if @room.admin == current_user %>
-      <button type="button" class="btn btn-danger float-end"><%= t('views.rooms.show.buttons.destroy') %> </button>
+      <%= link_to t('views.rooms.show.buttons.destroy'), room_path(@room), method: 'delete', type: 'button', class: 'btn btn-danger float-end'%>
     <% else %>
       <%= link_to t('views.rooms.show.buttons.leave'), leave_room_path(@room), method: 'post', type: 'button', class: 'btn btn-danger float-end' %>
     <% end%>

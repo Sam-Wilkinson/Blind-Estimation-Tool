@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Rooms', type: :request do
   let(:user) { create(:user) }
+  let(:admin) { create(:user) }
+  let(:room) { create(:room, admin: admin) }
 
   context 'when not signed in' do
     it 'redirects to the login page' do
@@ -57,9 +59,6 @@ RSpec.describe 'Rooms', type: :request do
   end
 
   describe 'join room' do
-    let(:admin) { create(:user) }
-    let(:room) { create(:room, admin: admin) }
-
     it 'doesnt add the admin to the rooms users' do
       sign_in(admin)
       post join_room_path(room)
@@ -107,8 +106,6 @@ RSpec.describe 'Rooms', type: :request do
   end
 
   describe 'leave room' do
-    let(:room) { create(:room) }
-
     before do
       sign_in(user)
     end
@@ -186,6 +183,62 @@ RSpec.describe 'Rooms', type: :request do
         post rooms_path, params: invalid_params
         follow_redirect!
         expect(response.body).to include(I18n.t('views.rooms.actions.create_room.failure'))
+      end
+
+      describe 'destroy room' do
+        context 'when user is not room admin' do
+          before do
+            sign_in(user)
+          end
+
+          it 'does not destroy the room' do
+            delete room_path(room)
+            expect(Room.all).to include(room)
+          end
+
+          context 'when the user is part of the room' do
+            it 'redirects to the room page' do
+              room.users << user
+              delete room_path(room)
+              expect(response).to redirect_to room_path(room)
+            end
+          end
+
+          context 'when the user is not part of the room' do
+            it 'redirects to the room index' do
+              delete room_path(room)
+              expect(response).to redirect_to rooms_path
+            end
+          end
+
+          it 'flashes an error message' do
+            delete room_path(room)
+            follow_redirect!
+            expect(response.body).to match(I18n.t('views.rooms.actions.delete_room.failure'))
+          end
+        end
+
+        context 'when the user is room admin' do
+          before do
+            sign_in(admin)
+          end
+
+          it 'destroys the room' do
+            delete room_path(room)
+            expect(Room.all).not_to include(room)
+          end
+
+          it 'flashes a success message' do
+            delete room_path(room)
+            follow_redirect!
+            expect(response.body).to match(I18n.t('views.rooms.actions.delete_room.success'))
+          end
+
+          it 'redirects to the room index' do
+            delete room_path(room)
+            expect(response).to redirect_to rooms_path
+          end
+        end
       end
     end
   end

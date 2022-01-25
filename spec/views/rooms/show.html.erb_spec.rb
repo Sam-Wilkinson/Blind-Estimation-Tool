@@ -40,6 +40,12 @@ RSpec.describe 'rooms/show', type: :view do
         render
         expect(response).not_to match(t('views.rooms.show.buttons.leave'))
       end
+
+      it 'displays the close room button' do
+        render
+        expect(response).to match(t('views.rooms.show.buttons.destroy'))
+        expect(response).to match(room_path(room))
+      end
     end
 
     context 'when the user is not admin' do

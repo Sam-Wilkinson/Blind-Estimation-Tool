@@ -102,6 +102,9 @@ en:
         create_room:
           success: "Welcome to your room"
           failure: "Sorry! The room was not ready to come out yet"
+        delete_room:
+          success: "Why is the room always gone?"
+          failure: "Sorry! Room still kicking"
   users:
     options:
       edit: "Edit"

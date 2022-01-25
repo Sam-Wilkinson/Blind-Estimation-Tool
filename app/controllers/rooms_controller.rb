@@ -7,7 +7,6 @@ class RoomsController < ApplicationController
   end
 
   def show
-    @room = Room.find(params[:id])
     return if @room.include?(current_user)
 
     flash[:alert] = 'You need to join the room to see the room!'
@@ -24,8 +23,18 @@ class RoomsController < ApplicationController
     end
   end
 
+  def destroy
+    if @room.admin == current_user
+      @room.destroy
+      redirect_to rooms_path, notice: t('views.rooms.actions.delete_room.success')
+    elsif @room.users.include?(current_user)
+      redirect_to room_path(@room), alert: t('views.rooms.actions.delete_room.failure')
+    else
+      redirect_to rooms_path, alert: t('views.rooms.actions.delete_room.failure')
+    end
+  end
+
   def join
-    @room = Room.find(params[:id])
     if @room.include?(current_user)
       flash[:warning] = t('views.rooms.actions.join_room.middling')
       render 'show'
@@ -38,7 +47,6 @@ class RoomsController < ApplicationController
   end
 
   def leave
-    @room = Room.find(params[:id])
     if @room.users.exclude?(current_user)
       redirect_to rooms_path, alert: t('views.rooms.actions.leave_room.failure')
     else
