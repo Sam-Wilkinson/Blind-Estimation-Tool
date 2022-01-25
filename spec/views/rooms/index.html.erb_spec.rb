@@ -11,6 +11,7 @@ RSpec.describe 'rooms/index', type: :view do
   it 'shows the create button' do
     render
     expect(rendered).to match(t('views.rooms.index.buttons.create'))
+    expect(rendered).to match(rooms_path)
   end
 
   context 'when there are no rooms' do

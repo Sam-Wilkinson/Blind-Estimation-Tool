@@ -143,4 +143,50 @@ RSpec.describe 'Rooms', type: :request do
       expect(response).to redirect_to(rooms_path)
     end
   end
+
+  describe 'create room' do
+    before do
+      sign_in(user)
+    end
+
+    context 'when the room is valid' do
+      let(:valid_params) { { name: 'room_name' } }
+
+      it 'creates a room' do
+        post rooms_path, params: valid_params
+        expect(Room.find_by(name: 'room_name')).not_to be_nil
+      end
+
+      it 'redirects to the room page' do
+        post rooms_path, params: valid_params
+        expect(response).to redirect_to room_path(1)
+      end
+
+      it 'flashes a success message' do
+        post rooms_path, params: valid_params
+        follow_redirect!
+        expect(response.body).to include(I18n.t('views.rooms.actions.create_room.success'))
+      end
+    end
+
+    context 'when the room is invalid' do
+      let(:invalid_params) { { name: nil } }
+
+      it 'does not create a room' do
+        post rooms_path, params: invalid_params
+        expect(Room.all).to be_empty
+      end
+
+      it 'redirects to the room index page' do
+        post rooms_path, params: invalid_params
+        expect(response).to redirect_to rooms_path
+      end
+
+      it 'flashes a failure message' do
+        post rooms_path, params: invalid_params
+        follow_redirect!
+        expect(response.body).to include(I18n.t('views.rooms.actions.create_room.failure'))
+      end
+    end
+  end
 end

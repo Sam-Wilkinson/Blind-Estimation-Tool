@@ -99,6 +99,9 @@ en:
         leave_room:
           success: "Bye!"
           failure: "Sorry, it did not work"
+        create_room:
+          success: "Welcome to your room"
+          failure: "Sorry! The room was not ready to come out yet"
   users:
     options:
       edit: "Edit"
