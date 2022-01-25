@@ -23,6 +23,20 @@ class RoomsController < ApplicationController
     end
   end
 
+  def update
+    if @room.admin == current_user
+      if @room.update(room_params)
+        redirect_to room_path(@room), notice: t('views.rooms.actions.update_room.success')
+      else
+        redirect_to room_path(@room), alert: t('views.rooms.actions.update_room.failure')
+      end
+    elsif @room.users.include?(current_user)
+      redirect_to room_path(@room), warning: t('views.rooms.actions.update_room.denied')
+    else
+      redirect_to rooms_path, warning: t('views.rooms.actions.update_room.denied')
+    end
+  end
+
   def destroy
     if @room.admin == current_user
       @room.destroy
@@ -62,6 +76,6 @@ class RoomsController < ApplicationController
   end
 
   def room_params
-    params.permit(%i[name])
+    params.require(:room).permit(%i[name])
   end
 end

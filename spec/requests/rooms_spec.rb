@@ -147,7 +147,7 @@ RSpec.describe 'Rooms', type: :request do
     end
 
     context 'when the room is valid' do
-      let(:valid_params) { { name: 'room_name' } }
+      let(:valid_params) { { room: { name: 'room_name' } } }
 
       it 'creates a room' do
         post rooms_path, params: valid_params
@@ -167,7 +167,7 @@ RSpec.describe 'Rooms', type: :request do
     end
 
     context 'when the room is invalid' do
-      let(:invalid_params) { { name: nil } }
+      let(:invalid_params) { { room: { name: nil } } }
 
       it 'does not create a room' do
         post rooms_path, params: invalid_params
@@ -184,61 +184,125 @@ RSpec.describe 'Rooms', type: :request do
         follow_redirect!
         expect(response.body).to include(I18n.t('views.rooms.actions.create_room.failure'))
       end
+    end
+  end
 
-      describe 'destroy room' do
-        context 'when user is not room admin' do
-          before do
-            sign_in(user)
-          end
+  describe 'destroy room' do
+    context 'when user is not room admin' do
+      before do
+        sign_in(user)
+      end
 
-          it 'does not destroy the room' do
-            delete room_path(room)
-            expect(Room.all).to include(room)
-          end
+      it 'does not destroy the room' do
+        delete room_path(room)
+        expect(Room.all).to include(room)
+      end
 
-          context 'when the user is part of the room' do
-            it 'redirects to the room page' do
-              room.users << user
-              delete room_path(room)
-              expect(response).to redirect_to room_path(room)
-            end
-          end
+      context 'when the user is part of the room' do
+        it 'redirects to the room page' do
+          room.users << user
+          delete room_path(room)
+          expect(response).to redirect_to room_path(room)
+        end
+      end
 
-          context 'when the user is not part of the room' do
-            it 'redirects to the room index' do
-              delete room_path(room)
-              expect(response).to redirect_to rooms_path
-            end
-          end
+      context 'when the user is not part of the room' do
+        it 'redirects to the room index' do
+          delete room_path(room)
+          expect(response).to redirect_to rooms_path
+        end
+      end
 
-          it 'flashes an error message' do
-            delete room_path(room)
-            follow_redirect!
-            expect(response.body).to match(I18n.t('views.rooms.actions.delete_room.failure'))
-          end
+      it 'flashes an error message' do
+        delete room_path(room)
+        follow_redirect!
+        expect(response.body).to match(I18n.t('views.rooms.actions.delete_room.failure'))
+      end
+    end
+
+    context 'when the user is room admin' do
+      before do
+        sign_in(admin)
+      end
+
+      it 'destroys the room' do
+        delete room_path(room)
+        expect(Room.all).not_to include(room)
+      end
+
+      it 'flashes a success message' do
+        delete room_path(room)
+        follow_redirect!
+        expect(response.body).to match(I18n.t('views.rooms.actions.delete_room.success'))
+      end
+
+      it 'redirects to the room index' do
+        delete room_path(room)
+        expect(response).to redirect_to rooms_path
+      end
+    end
+  end
+
+  describe 'update room' do
+    let(:param) { { room: { name: 'updated_name' } } }
+
+    context 'when user is not room admin' do
+      before do
+        sign_in(user)
+      end
+
+      it 'does not update the room' do
+        patch room_path(room, param)
+        expect(Room.find_by(name: 'updated_name')).to be_nil
+      end
+
+      context 'when the user is part of the room' do
+        it 'redirects to the room page' do
+          room.users << user
+          patch room_path(room, param)
+          expect(response).to redirect_to room_path(room)
         end
 
-        context 'when the user is room admin' do
-          before do
-            sign_in(admin)
-          end
-
-          it 'destroys the room' do
-            delete room_path(room)
-            expect(Room.all).not_to include(room)
-          end
-
-          it 'flashes a success message' do
-            delete room_path(room)
-            follow_redirect!
-            expect(response.body).to match(I18n.t('views.rooms.actions.delete_room.success'))
-          end
-
-          it 'redirects to the room index' do
-            delete room_path(room)
-            expect(response).to redirect_to rooms_path
-          end
+        it 'flashes a warning message' do
+          patch room_path(room, param)
+          follow_redirect!
+          expect(response.body).to match(I18n.t('views.rooms.actions.update_room.denied'))
         end
+      end
+
+      context 'when the user is not part of the room' do
+        it 'redirects to the room index' do
+          patch room_path(room, param)
+          expect(response).to redirect_to rooms_path
+        end
+      end
+
+      it 'flashes an error message' do
+        patch room_path(room, param)
+        follow_redirect!
+        expect(response.body).to match(I18n.t('views.rooms.actions.update_room.denied'))
+      end
+    end
+
+    context 'when the user is room admin' do
+      before do
+        sign_in(admin)
+      end
+
+      it 'updates the room' do
+        patch room_path(room, param)
+        expect(Room.find_by(name: 'updated_name')).not_to be_nil
+      end
+
+      it 'flashes a success message' do
+        patch room_path(room, param)
+        follow_redirect!
+        expect(response.body).to match(I18n.t('views.rooms.actions.update_room.success'))
+      end
+
+      it 'redirects to the room index' do
+        patch room_path(room, param)
+        expect(response).to redirect_to room_path(room)
       end
     end
   end

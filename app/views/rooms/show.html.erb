@@ -1,15 +1,15 @@
 <div class="container-fluid">
-  <% if @room.users.blank? %>
-    <h5><%= t('views.rooms.show.other_users.no_users') %></h5>
-    <h5><%= t('views.rooms.show.other_users.call_to_action') %></h5>
-      <%= link_to t('views.rooms.show.buttons.destroy'), room_path(@room), method: 'delete', type: 'button', class: 'btn btn-danger float-end'%>
-  <% else %>
-    <button type="button" class="btn btn-success float-start"><%= t('views.rooms.show.table.options.estimate') %></button>
     <% if @room.admin == current_user %>
-      <%= link_to t('views.rooms.show.buttons.destroy'), room_path(@room), method: 'delete', type: 'button', class: 'btn btn-danger float-end'%>
+        <%= render partial: 'form', locals: { room: @room, button_content: t('views.rooms.show.buttons.edit'), method: 'patch', path: room_path(@room) } %>
+      <%= link_to t('views.rooms.show.buttons.destroy'), room_path(@room), method: 'delete', type: 'button', class: 'btn btn-danger float-end mx-2'%>
     <% else %>
       <%= link_to t('views.rooms.show.buttons.leave'), leave_room_path(@room), method: 'post', type: 'button', class: 'btn btn-danger float-end' %>
     <% end%>
+  <% if @room.users.blank? %>
+    <h5><%= t('views.rooms.show.other_users.no_users') %></h5>
+    <h5><%= t('views.rooms.show.other_users.call_to_action') %></h5>
+  <% else %>
+    <button type="button" class="btn btn-success float-start"><%= t('views.rooms.show.table.options.estimate') %></button>
     <table class="table">
       <thead>
         <tr>

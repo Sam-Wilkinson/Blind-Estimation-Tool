@@ -10,6 +10,10 @@ RSpec.describe 'rooms/show', type: :view do
   end
 
   context 'when there are no users in the room' do
+    before do
+      allow(view).to receive(:current_user).and_return(admin)
+    end
+
     it 'displays the call to action' do
       render
       expect(response).to match(t('views.rooms.show.other_users.call_to_action'))
@@ -45,6 +49,13 @@ RSpec.describe 'rooms/show', type: :view do
         render
         expect(response).to match(t('views.rooms.show.buttons.destroy'))
         expect(response).to match(room_path(room))
+      end
+
+      it 'displays the edit room button' do
+        render
+        expect(response).to match(t('views.rooms.show.buttons.edit'))
+        expect(response).to match(room_path(room))
+        expect(response).to match('patch')
       end
     end
 
