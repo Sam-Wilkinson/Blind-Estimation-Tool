@@ -9,6 +9,7 @@ RSpec.describe Room, type: :model do
 
     it { is_expected.to belong_to(:admin) }
     it { is_expected.to have_many(:users).through(:room_users) }
+    it { is_expected.to have_many(:user_stories) }
   end
 
   describe 'include?' do
