@@ -16,7 +16,7 @@ RSpec.describe User, type: :model do
     it { is_expected.not_to allow_value('sam_wilkinsonhotmail.com').for(:email) }
     it { is_expected.not_to allow_value('sam@wilkinson@hotmail.com').for(:email) }
 
-    it { is_expected.to have_and_belong_to_many(:rooms) }
+    it { is_expected.to have_many(:rooms).through(:room_users) }
     it { is_expected.to have_many(:owned_rooms) }
   end
 end

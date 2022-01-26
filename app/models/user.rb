@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates :username, uniqueness: true, presence: true
   validates :email, uniqueness: true, presence: true, 'valid_email_2/email': true
 
-  has_and_belongs_to_many :rooms
+  has_many :room_users, dependent: :destroy
+  has_many :rooms, through: :room_users, dependent: :destroy
   has_many :owned_rooms, class_name: 'Room', dependent: :destroy, inverse_of: :admin
 end
