@@ -38,6 +38,7 @@ RSpec.describe 'rooms/show', type: :view do
       it 'displays the kick user button' do
         render
         expect(response).to match(t('views.rooms.show.table.titles.kick'))
+        expect(response).to match(kick_user_room_path(room))
       end
 
       it 'does not display the leave room button' do

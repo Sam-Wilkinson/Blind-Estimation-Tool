@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :rooms
   post 'rooms/:id/join', to: 'rooms#join', as: 'join_room'
   post 'rooms/:id/leave', to: 'rooms#leave', as: 'leave_room'
+  delete 'rooms/:id/kick', to: 'room_users#kick', as: 'kick_user_room'
   resources :estimation_values
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

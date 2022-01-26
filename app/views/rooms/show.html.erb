@@ -15,7 +15,7 @@
         <tr>
           <th scope="col"><%= t('active_record.attributes.user.username') %></th>
           <% if @room.admin == current_user %>
-            <th scope="col"><%= t('views.rooms.show.table.titles.action') %></th>
+            <th scope="col"><%= t('views.rooms.show.table.titles.kick') %></th>
           <% end %>
         </tr>
       </thead>
@@ -24,11 +24,11 @@
         <% @room.users.each do |user| %>
           <tr>
             <td><%= user.username %></td>
-            <% if @room.admin == current_user %>
-              <td>
-                <button type="button" class="btn btn-danger float-end"><%= t('views.rooms.show.table.titles.kick')%> </button>
-              </td>
-            <% end %>
+            <td>
+              <% if @room.admin == current_user %>
+                <%= link_to t('views.rooms.show.table.titles.kick'), kick_user_room_path(@room, user_id: user.id), method: 'delete',type: 'button', class: 'btn btn-danger float-end', data: {confirm: 'Are you sure?'} %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>

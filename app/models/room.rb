@@ -6,4 +6,8 @@ class Room < ApplicationRecord
   def include?(user)
     users.include?(user) || admin == user
   end
+
+  def remove_user(user)
+    users.destroy(user)
+  end
 end

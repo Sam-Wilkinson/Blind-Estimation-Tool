@@ -110,6 +110,10 @@ en:
           success: "The room is no longer the same"
           denied: "You do not have permission to do that"
           failure: "Sorry! The room has not changed"
+        kick_user:
+          success: "The user has been successfully removed"
+          denied: "You do not have permission to remove a user from a room"
+          failure: "I am sorry, it did not work"
   users:
     options:
       edit: "Edit"

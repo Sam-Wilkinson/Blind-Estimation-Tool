@@ -29,4 +29,15 @@ RSpec.describe Room, type: :model do
       expect(room.include?(admin)).to be(true)
     end
   end
+
+  describe 'remove_user' do
+    let(:room) { create(:room) }
+    let(:user) { create(:user) }
+
+    it 'removes a users access to the room' do
+      room.users << user
+      room.remove_user(user)
+      expect(room.users).not_to include(user)
+    end
+  end
 end
