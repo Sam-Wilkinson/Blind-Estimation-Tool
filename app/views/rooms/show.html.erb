@@ -3,7 +3,7 @@
         <%= render partial: 'form', locals: { room: @room, button_content: t('views.rooms.show.buttons.edit'), method: 'patch', path: room_path(@room) } %>
       <%= link_to t('views.rooms.show.buttons.destroy'), room_path(@room), method: 'delete', type: 'button', class: 'btn btn-danger float-end mx-2'%>
     <% else %>
-      <%= link_to t('views.rooms.show.buttons.leave'), leave_room_path(@room), method: 'post', type: 'button', class: 'btn btn-danger float-end' %>
+      <%= link_to t('views.rooms.show.buttons.leave'), leave_room_path(@room), method: 'delete', type: 'button', class: 'btn btn-danger float-end' %>
     <% end%>
   <% if @room.users.blank? %>
     <h5><%= t('views.rooms.show.other_users.no_users') %></h5>

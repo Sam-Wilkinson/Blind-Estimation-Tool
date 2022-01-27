@@ -60,15 +60,6 @@ class RoomsController < ApplicationController
     render 'show'
   end
 
-  def leave
-    if @room.users.exclude?(current_user)
-      redirect_to rooms_path, alert: t('views.rooms.actions.leave_room.failure')
-    else
-      @room.users.delete(current_user)
-      redirect_to rooms_path, notice: t('views.rooms.actions.leave_room.success')
-    end
-  end
-
   private
 
   def set_requested_room_value

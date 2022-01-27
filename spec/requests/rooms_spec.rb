@@ -105,42 +105,6 @@ RSpec.describe 'Rooms', type: :request do
     end
   end
 
-  describe 'leave room' do
-    before do
-      sign_in(user)
-    end
-
-    context 'when user in room' do
-      before do
-        room.users << user
-      end
-
-      it 'removes user from the list of room users' do
-        post leave_room_path(room)
-        expect(room.users.all).not_to include(user)
-      end
-
-      it 'flashes a success message' do
-        post leave_room_path(room)
-        follow_redirect!
-        expect(response.body).to match(I18n.t('views.rooms.actions.leave_room.success'))
-      end
-    end
-
-    context 'when user isnt in room' do
-      it 'flashes an error message' do
-        post leave_room_path(room)
-        follow_redirect!
-        expect(response.body).to match(I18n.t('views.rooms.actions.leave_room.failure'))
-      end
-    end
-
-    it 'redirects to the rooms index page' do
-      post leave_room_path(room)
-      expect(response).to redirect_to(rooms_path)
-    end
-  end
-
   describe 'create room' do
     before do
       sign_in(user)

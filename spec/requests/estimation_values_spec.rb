@@ -49,7 +49,7 @@ RSpec.describe 'EstimationValues', type: :request do
     describe 'POST estimation_value' do
       context 'when the estimation_value is valid' do
         it 'creates an estimation_value and redirects to the estimation_value index page' do
-          post '/estimation_values', params: { estimation_value: { value: 20, placement: 23 }}
+          post '/estimation_values', params: { estimation_value: { value: 20, placement: 23 } }
 
           expect(response).to have_http_status(:redirect)
           expect(response).to redirect_to(assigns(:estimation_value))
@@ -62,7 +62,7 @@ RSpec.describe 'EstimationValues', type: :request do
 
       context 'when the estimation_value is invalid' do
         it 'redirects to the estimation_value index page and flashes an error message' do
-          post '/estimation_values', params: {estimation_value: { value: nil, placement: nil} }
+          post '/estimation_values', params: { estimation_value: { value: nil, placement: nil } }
 
           expect(response).to have_http_status(:redirect)
           expect(response).to redirect_to(assigns(:estimation_value))
