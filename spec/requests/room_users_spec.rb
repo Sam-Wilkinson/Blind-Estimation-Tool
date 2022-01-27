@@ -66,4 +66,39 @@ RSpec.describe 'RoomUsers', type: :request do
       expect(response).to redirect_to(rooms_path)
     end
   end
+
+  describe 'join room' do
+    let(:admin) { create(:user) }
+    let(:room) { create(:room, admin: admin) }
+
+    before do
+      sign_in(user)
+    end
+
+    context 'when the user is not in the room' do
+      it 'flashes a success message' do
+        post join_room_path(room)
+        expect(flash[:notice]).to be_present
+      end
+
+      it 'adds a user to the room' do
+        room_count = room.users.count
+        post join_room_path(room)
+        expect(room.users.count).to eq(room_count + 1)
+      end
+    end
+
+    context 'when user is already in the room' do
+      it 'flashes a warning message' do
+        room.users << user
+        post join_room_path(room)
+        expect(flash[:warning]).to be_present
+      end
+    end
+
+    it 'enters the room' do
+      post join_room_path(room)
+      expect(response).to render_template('rooms/show')
+    end
+  end
 end

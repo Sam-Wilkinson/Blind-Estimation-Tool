@@ -11,4 +11,10 @@ class Room < ApplicationRecord
   def remove_user(user)
     users.destroy(user)
   end
+
+  def add_user(user)
+    return if include?(user)
+
+    users << user
+  end
 end

@@ -40,4 +40,27 @@ RSpec.describe Room, type: :model do
       expect(room.users).not_to include(user)
     end
   end
+
+  describe 'add_user' do
+    let(:admin) { create(:user) }
+    let(:room) { create(:room, admin: admin) }
+    let(:user) { create(:user) }
+
+    it 'adds access for a user to the room' do
+      room.add_user(user)
+      expect(room.users).to include(user)
+    end
+
+    it 'does not give access to the room twice' do
+      room.add_user(user)
+      room.add_user(user)
+      expect(room.users).to include(user).at_most(1).times
+      expect(room.users).to include(user).once
+    end
+
+    it 'does not give access to the admin' do
+      room.add_user(admin)
+      expect(room.users).not_to include(admin)
+    end
+  end
 end
