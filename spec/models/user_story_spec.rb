@@ -8,6 +8,5 @@ RSpec.describe UserStory, type: :model do
     it { is_expected.to validate_uniqueness_of(:title).scoped_to(:room_id) }
 
     it { is_expected.to belong_to(:room) }
-
   end
 end

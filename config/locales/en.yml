@@ -89,6 +89,10 @@ en:
           leave: "Leave"
           destroy: "Close room"
           edit: "Edit"
+          create: "Create"
+          user_story:
+            create: "Create user story"
+          close: "Close"
         other_users:
           no_users: "You are alone in this room"
           call_to_action: "Invite others to join!"
@@ -114,6 +118,12 @@ en:
           success: "The user has been successfully removed"
           denied: "You do not have permission to remove a user from a room"
           failure: "I am sorry, it did not work"
+    user_stories:
+      actions:
+        create:
+          success: "The user story has been created"
+          denied: "Only the room admin can create user stories for the room"
+          failure: "The user story failed to save, please try again"
   users:
     options:
       edit: "Edit"
@@ -126,6 +136,7 @@ en:
       room: "Room"
       estimations:
         values: "EstimationValue"
+      user_story: "User Story"
     attributes:
       room:
         name: "Name"

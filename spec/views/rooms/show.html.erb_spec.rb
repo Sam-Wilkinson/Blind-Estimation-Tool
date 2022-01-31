@@ -82,4 +82,21 @@ RSpec.describe 'rooms/show', type: :view do
       end
     end
   end
+
+  context 'when the user is admin' do
+    before do
+      allow(view).to receive(:current_user).and_return(admin)
+    end
+
+    it 'displays the create user story button' do
+      render
+      expect(response).to match(t('views.rooms.show.buttons.user_story.create'))
+      expect(response).to match(user_stories_path)
+    end
+
+    it 'contains the user_stories modal' do
+      render
+      expect(response).to render_template(partial: 'user_stories/_modal')
+    end
+  end
 end

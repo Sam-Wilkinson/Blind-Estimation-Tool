@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   delete 'rooms/:id/leave', to: 'room_users#leave', as: 'leave_room'
   delete 'rooms/:id/kick', to: 'room_users#kick', as: 'kick_user_room'
   resources :estimation_values
+  resources :user_stories
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
