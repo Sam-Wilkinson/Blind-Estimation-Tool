@@ -5,6 +5,7 @@ class EstimationValuesController < ApplicationController
 
   def index
     @estimation_values = EstimationValue.order(placement: :ASC)
+    @estimation_value = EstimationValue.new
   end
 
   def create

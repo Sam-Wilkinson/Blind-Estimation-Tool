@@ -6,19 +6,19 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <%= form_with model: estimation_value,  path: path, local: true, method: method do |f| %>
+        <%= form_with model: estimation_value do |f| %>
           <div class="d-flex-col">
             <%= f.label :value, class: "form-label" %>
-            <%= f.number_field :value, value: estimation_value.value, class: "form-control" %>
+            <%= f.number_field :value, class: "form-control" %>
           </div>
           <div class="d-flex-col">
             <%= f.label :placement, class: "form-label" %>
-            <%= f.number_field :placement, value: estimation_value.placement, class: "form-control" %>
+            <%= f.number_field :placement, class: "form-control" %>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <%= f.submit submit_button_content, class: "btn btn-info" %>
+          <%= f.submit class: "btn btn-info" %>
         <% end %>
       </div>
     </div>

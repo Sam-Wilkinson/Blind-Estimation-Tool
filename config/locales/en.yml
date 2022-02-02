@@ -159,3 +159,6 @@ en:
       room:
         create: "Create Room"
         update: "Update Room"
+      estimation_value:
+        create: "Create"
+        update: "Update"

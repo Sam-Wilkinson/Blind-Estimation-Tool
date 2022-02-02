@@ -1,4 +1,4 @@
-<%= render partial: 'modal', locals: { estimation_value: EstimationValue.new, modalName: 'createModal', method: :post, path: estimation_values_path, submit_button_content: t('views.estimations.values.options.create')} %>
+<%= render partial: 'modal', locals: { estimation_value: @estimation_value, modalName: 'createModal'} %>
 <div class="container">
   <div class="d-flex justify-content-between">
     <h1><%= t('views.estimations.values.title')%> </h1>
@@ -29,7 +29,7 @@
               </button>
               </td>
               <td><%= link_to t('views.estimations.values.options.delete'), estimation_value_path(estimation_value) ,method: 'delete', type: 'button', class: 'btn btn-danger' %></td>
-              <%= render partial: 'modal', locals: { estimation_value: estimation_value, modalName: "updateModal#{estimation_value.id}", method: :patch, path: estimation_value_path(estimation_value), submit_button_content: t('views.estimations.values.options.update') } %>
+              <%= render partial: 'modal', locals: { estimation_value: estimation_value, modalName: "updateModal#{estimation_value.id}"} %>
             </tr>
           <% end %>
         </tbody>
