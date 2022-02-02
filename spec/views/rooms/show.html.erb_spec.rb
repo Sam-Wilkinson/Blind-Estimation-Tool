@@ -7,6 +7,7 @@ RSpec.describe 'rooms/show', type: :view do
 
   before do
     assign(:room, room)
+    assign(:user_story, UserStory.new)
   end
 
   context 'when there are no users in the room' do
@@ -89,7 +90,7 @@ RSpec.describe 'rooms/show', type: :view do
 
     it 'displays the create user story button' do
       render
-      expect(response).to match(t('views.rooms.show.buttons.user_story.create'))
+      expect(response).to match(t('helpers.submit.user_story.create'))
       expect(response).to match(user_stories_path)
     end
 

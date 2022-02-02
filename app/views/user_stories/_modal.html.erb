@@ -6,20 +6,20 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <%=form_with model: user_story, path: path, local: true, method: method do |f| %>
+        <%=form_with model: user_story do |f| %>
           <div class="mb-3">
             <%= f.label :title ,class: "col-form-label", for: "title" %>
-            <%= f.text_field :title, value: user_story.title, class: "form-control", id: "title" %>
+            <%= f.text_field :title, class: "form-control", id: "title" %>
           </div>
           <div class="mb-3">
             <%= f.label :description ,class: "col-form-label", for: "message-text" %>
-            <%= f.text_area :description, value: user_story.description, class: "form-control", id: "message-text" %>
+            <%= f.text_area :description, class: "form-control", id: "message-text" %>
           </div>
         <%= hidden_field_tag 'room_id', room_id %>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('views.rooms.show.buttons.close')%></button>
-          <%= f.submit submit_button_content, class: "btn btn-info" %>
+          <%= f.submit class: "btn btn-info" %>
         </div>
       <% end %>
     </div>

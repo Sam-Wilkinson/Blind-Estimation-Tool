@@ -8,6 +8,7 @@ class RoomsController < ApplicationController
   end
 
   def show
+    @user_story = UserStory.new
     return if @room.include?(current_user)
 
     flash[:alert] = 'You need to join the room to see the room!'

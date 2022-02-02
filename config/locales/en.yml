@@ -162,3 +162,5 @@ en:
       estimation_value:
         create: "Create"
         update: "Update"
+      user_story:
+        create: "Create User Story"
