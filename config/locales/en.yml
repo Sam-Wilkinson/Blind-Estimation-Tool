@@ -154,3 +154,8 @@ en:
       user:
         username: "Username"
         email: "Email" 
+  helpers:
+    submit:
+      room:
+        create: "Create Room"
+        update: "Update Room"

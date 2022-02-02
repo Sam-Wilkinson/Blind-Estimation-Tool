@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <% if @room.admin == current_user %>
         <%= render partial: 'user_stories/modal', locals: {user_story: UserStory.new, modalName: 'create_user_story_modal', path: user_stories_path, method: 'post', submit_button_content: t('views.rooms.show.buttons.create'), room_id: @room.id} %>
-        <%= render partial: 'form', locals: { room: @room, button_content: t('views.rooms.show.buttons.edit'), method: 'patch', path: room_path(@room) } %>
+        <%= render partial: 'form'%>
         <%= link_to t('views.rooms.show.buttons.destroy'), room_path(@room), method: 'delete', type: 'button', class: 'btn btn-danger float-end mx-2'%>
         <button type="button" class="btn btn-success m-3" data-bs-toggle="modal" data-bs-target="#create_user_story_modal" data-bs-whatever="@mdo"><%= t('views.rooms.show.buttons.user_story.create') %></button>
     <% else %>

@@ -1,6 +1,6 @@
 <div class='container-fluid'>
   <h1><%= t('views.rooms.index.title') %></h1>
-  <%= render partial: 'form', locals: { room: Room.new, method: 'post', path: rooms_path, button_content: t('views.rooms.index.buttons.create') } %>
+  <%= render partial: 'form'%>
   <% if @rooms.blank? %>
     <h5><%= t('views.rooms.index.available_rooms.no_rooms') %></h5>
   <% else %>

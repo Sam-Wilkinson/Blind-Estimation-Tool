@@ -4,6 +4,7 @@ class RoomsController < ApplicationController
 
   def index
     @rooms = Room.all
+    @room = Room.new
   end
 
   def show

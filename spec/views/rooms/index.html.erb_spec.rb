@@ -9,8 +9,9 @@ RSpec.describe 'rooms/index', type: :view do
   end
 
   it 'shows the create button' do
+    assign(:room, Room.new)
     render
-    expect(rendered).to match(t('views.rooms.index.buttons.create'))
+    expect(rendered).to match(t('helpers.submit.room.create'))
     expect(rendered).to match(rooms_path)
   end
 

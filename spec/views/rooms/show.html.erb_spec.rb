@@ -54,9 +54,8 @@ RSpec.describe 'rooms/show', type: :view do
 
       it 'displays the edit room button' do
         render
-        expect(response).to match(t('views.rooms.show.buttons.edit'))
+        expect(response).to match(t('helpers.submit.room.update'))
         expect(response).to match(room_path(room))
-        expect(response).to match('patch')
       end
     end
 
