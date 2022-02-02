@@ -18,4 +18,8 @@ class Room < ApplicationRecord
 
     users << user
   end
+
+  def self.available_filters
+    %i[all available included admin]
+  end
 end

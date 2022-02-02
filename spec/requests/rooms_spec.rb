@@ -18,11 +18,21 @@ RSpec.describe 'Rooms', type: :request do
     end
 
     describe 'GET /index' do
-      before do
+      it 'renders the correct template' do
         get rooms_path
+        expect(response).to render_template('rooms/index')
       end
 
-      it { is_expected.to render_template('rooms/index') }
+      it 'filters and searches the rooms' do
+        room = create(:room, name: 'room_name')
+        get rooms_path, params: { search: 'something', filter: '' }
+        expect(assigns(:rooms)).not_to include(room)
+      end
+
+      it 'provides categories to the view' do
+        get rooms_path
+        expect(assigns(:categories)).to be_truthy
+      end
     end
 
     describe 'get /show' do

@@ -75,6 +75,7 @@ en:
           join: "Join"
           create: "Create"
           enter: "Enter"
+          search: "Search"
         available_rooms:
           no_rooms: "Apologies!, there are no rooms available"
       show:

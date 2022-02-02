@@ -1,6 +1,17 @@
 <div class='container-fluid'>
   <h1><%= t('views.rooms.index.title') %></h1>
-  <%= render partial: 'form'%>
+  <div class="row justify-content-between">
+    <div class='col-6'>
+      <%= form_with(path: rooms_path, method: 'get', local: true) do %>
+        <%= text_field_tag(:search) %>
+        <%= select_tag(:filter, options_for_select(@categories))%>
+        <%= submit_tag(t('views.rooms.index.buttons.search'), class:'btn btn-secondary')%>
+      <% end %>
+    </div>
+    <div class='col'>
+      <%= render partial: 'form'%>
+    </div>
+  </div>
   <% if @rooms.blank? %>
     <h5><%= t('views.rooms.index.available_rooms.no_rooms') %></h5>
   <% else %>

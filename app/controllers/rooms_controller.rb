@@ -3,7 +3,8 @@ class RoomsController < ApplicationController
   before_action :set_requested_room_value, except: %i[index create]
 
   def index
-    @rooms = Room.all
+    @rooms = RoomSearchService.new(params[:search], params[:filter], current_user.id).search
+    @categories = Room.available_filters
     @room = Room.new
   end
 
