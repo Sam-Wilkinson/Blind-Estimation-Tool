@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_26_130342) do
+ActiveRecord::Schema.define(version: 2022_02_03_141901) do
 
   create_table "estimation_values", force: :cascade do |t|
     t.integer "value"
@@ -19,6 +19,18 @@ ActiveRecord::Schema.define(version: 2022_01_26_130342) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["placement"], name: "index_estimation_values_on_placement", unique: true
     t.index ["value"], name: "index_estimation_values_on_value", unique: true
+  end
+
+  create_table "estimations", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "estimation_value_id", null: false
+    t.integer "user_story_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["estimation_value_id"], name: "index_estimations_on_estimation_value_id"
+    t.index ["user_id", "user_story_id"], name: "index_estimations_on_user_id_and_user_story_id", unique: true
+    t.index ["user_id"], name: "index_estimations_on_user_id"
+    t.index ["user_story_id"], name: "index_estimations_on_user_story_id"
   end
 
   create_table "room_users", force: :cascade do |t|
@@ -37,13 +49,6 @@ ActiveRecord::Schema.define(version: 2022_01_26_130342) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_rooms_on_name", unique: true
     t.index ["user_id"], name: "index_rooms_on_user_id"
-  end
-
-  create_table "rooms_users", id: false, force: :cascade do |t|
-    t.integer "room_id", null: false
-    t.integer "user_id", null: false
-    t.index ["room_id"], name: "index_rooms_users_on_room_id"
-    t.index ["user_id"], name: "index_rooms_users_on_user_id"
   end
 
   create_table "user_stories", force: :cascade do |t|
@@ -71,6 +76,9 @@ ActiveRecord::Schema.define(version: 2022_01_26_130342) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "estimations", "estimation_values"
+  add_foreign_key "estimations", "user_stories"
+  add_foreign_key "estimations", "users"
   add_foreign_key "room_users", "rooms"
   add_foreign_key "room_users", "users"
   add_foreign_key "rooms", "users"

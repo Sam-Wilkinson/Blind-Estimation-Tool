@@ -18,5 +18,9 @@ RSpec.describe User, type: :model do
 
     it { is_expected.to have_many(:rooms).through(:room_users) }
     it { is_expected.to have_many(:owned_rooms) }
+
+    it { is_expected.to have_many(:estimations).dependent(:destroy) }
+    it { is_expected.to have_many(:estimation_values).through(:estimations) }
+    it { is_expected.to have_many(:user_stories).through(:estimations) }
   end
 end

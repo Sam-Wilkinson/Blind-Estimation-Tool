@@ -10,4 +10,7 @@ class User < ApplicationRecord
   has_many :room_users, dependent: :destroy
   has_many :rooms, through: :room_users, dependent: :destroy
   has_many :owned_rooms, class_name: 'Room', dependent: :destroy, inverse_of: :admin
+  has_many :estimations, dependent: :destroy
+  has_many :estimation_values, through: :estimations, dependent: nil
+  has_many :user_stories, through: :estimations, dependent: nil
 end
