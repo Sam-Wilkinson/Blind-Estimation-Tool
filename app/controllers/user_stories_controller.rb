@@ -1,6 +1,6 @@
 class UserStoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :authenticate_admin_status, except: %i[show]
+  before_action :authenticate_admin_status, except: %i[show destroy]
   before_action :set_requested_user_story_value, except: %i[create]
 
   def create
@@ -25,10 +25,17 @@ class UserStoriesController < ApplicationController
 
   def update
     if @user_story.update(user_story_params)
-      redirect_to user_story_path, notice: t('views.estimations.values.flash_messages.update.success')
+      redirect_to user_story_path, notice: t('views.user_stories.flash_messages.update.success')
     else
-      redirect_to user_story_path, alert: t('views.estimations.values.flash_messages.update.failure')
+      redirect_to user_story_path, alert: t('views.user_storiesflash_messages.update.failure')
     end
+  end
+
+  def destroy
+    room = @user_story.room
+    redirect_to room, alert: t('views.user_stories.access.denied') unless current_user == room.admin
+    @user_story.destroy
+    redirect_to room, notice: t('views.user_stories.flash_messages.delete.success')
   end
 
   private

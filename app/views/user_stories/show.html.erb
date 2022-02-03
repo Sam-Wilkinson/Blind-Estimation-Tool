@@ -3,8 +3,9 @@
   <h1><%= @user_story.title %></h1>
   <p><%= @user_story.description %></p>
   <% if @user_story.room.admin == current_user %>
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal">
+  <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#updateModal">
     <%= t('views.user_stories.show.buttons.update') %>
-  </button>
+  </button><br/>
+    <%= link_to t('views.user_stories.show.buttons.delete'), user_story_path(@user_story), method: :delete, data: {confirm: t('views.user_stories.show.confirmations.delete'),}, class: 'btn btn-danger m-1'%>
   <% end %>
 </div>

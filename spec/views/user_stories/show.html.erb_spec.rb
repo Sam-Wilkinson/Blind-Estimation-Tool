@@ -20,7 +20,7 @@ RSpec.describe 'user_stories/show', type: :view do
   it 'can display the user story description' do
     allow(view).to receive(:current_user).and_return(user)
     render
-    expect(rendered).to match(user_story.title)
+    expect(rendered).to match(user_story.description)
   end
 
   context 'when user is room admin' do
@@ -28,6 +28,12 @@ RSpec.describe 'user_stories/show', type: :view do
       allow(view).to receive(:current_user).and_return(admin)
       render
       expect(rendered).to match(t('views.user_stories.show.buttons.update'))
+    end
+
+    it 'displays the delete user story button' do
+      allow(view).to receive(:current_user).and_return(admin)
+      render
+      expect(rendered).to match(t('views.user_stories.show.buttons.delete'))
     end
   end
 end

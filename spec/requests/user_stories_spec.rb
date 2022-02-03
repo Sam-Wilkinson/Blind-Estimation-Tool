@@ -150,4 +150,30 @@ RSpec.describe 'UserStories', type: :request do
       expect(flash[:notice]).to be_present
     end
   end
+
+  describe 'DELETE /user_story' do
+    let(:user) { create(:user) }
+    let(:room) { create(:room, admin: user) }
+    let(:user_story) { create(:user_story, room: room) }
+
+    before do
+      sign_in(user)
+    end
+
+    it 'deletes the user_story' do
+      delete user_story_path(user_story, params: { room_id: room.id })
+      expect(UserStory.all).not_to include(user_story)
+    end
+
+    it 'redirects to room page' do
+      delete user_story_path(user_story, params: { room_id: room.id })
+      expect(response).to redirect_to room
+    end
+
+    it 'flashes a success message' do
+      delete user_story_path(user_story, params: { room_id: room.id })
+      follow_redirect!
+      expect(flash[:notice]).to be_present
+    end
+  end
 end
