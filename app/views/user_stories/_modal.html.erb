@@ -5,8 +5,8 @@
         <h5 class="modal-title" id="ModalLabel"><%= t('active_record.models.user_story')  %></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <%=form_with model: user_story do |f| %>
       <div class="modal-body">
-        <%=form_with model: user_story do |f| %>
           <div class="mb-3">
             <%= f.label :title ,class: "col-form-label", for: "title" %>
             <%= f.text_field :title, class: "form-control", id: "title" %>
@@ -15,7 +15,7 @@
             <%= f.label :description ,class: "col-form-label", for: "message-text" %>
             <%= f.text_area :description, class: "form-control", id: "message-text" %>
           </div>
-        <%= hidden_field_tag 'room_id', room_id %>
+          <%= hidden_field_tag 'room_id', room_id %>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('views.rooms.show.buttons.close')%></button>

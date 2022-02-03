@@ -16,7 +16,7 @@
         <tr>
           <th scope="col"><%= t('active_record.attributes.user.username') %></th>
           <% if @room.admin == current_user %>
-            <th scope="col"><%= t('views.rooms.show.table.titles.kick') %></th>
+            <th scope="col" class="text-end"><%= t('views.rooms.show.table.titles.kick') %></th>
           <% end %>
         </tr>
       </thead>
@@ -30,6 +30,25 @@
                 <%= link_to t('views.rooms.show.table.titles.kick'), kick_user_room_path(@room, user_id: user.id), method: 'delete',type: 'button', class: 'btn btn-danger float-end', data: {confirm: 'Are you sure?'} %>
               <% end %>
             </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+  <% if @room.user_stories.blank? %>
+    <h5><%= t('views.rooms.show.user_stories.no_stories') %></h5>
+  <% else %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col"><%= t('active_record.attributes.user_stories.title') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @room.user_stories.each do |user_story| %>
+          <tr>
+            <td><%= user_story.title %></td>
+            <td><%= link_to t('views.rooms.show.buttons.user_story.show'), user_story_path(user_story), type: 'button', class: 'btn btn-success float-end' %></td>
           </tr>
         <% end %>
       </tbody>

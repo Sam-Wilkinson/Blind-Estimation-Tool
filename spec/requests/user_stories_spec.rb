@@ -85,4 +85,34 @@ RSpec.describe 'UserStories', type: :request do
       expect(response).to redirect_to room_path(room)
     end
   end
+
+  describe 'GET /user_story' do
+    let(:user) { create(:user) }
+    let(:room) { create(:room) }
+    let(:user_story) { create(:user_story, room: room) }
+
+    before do
+      sign_in(user)
+    end
+
+    context 'when the user is part of the room' do
+      it 'displays the user story show page' do
+        room.users << user
+        get user_story_path(user_story)
+        expect(response).to render_template('show')
+      end
+    end
+
+    context 'when the user is not part of the room' do
+      it 'redirects to the rooms path' do
+        get user_story_path(user_story)
+        expect(response).to redirect_to rooms_path
+      end
+
+      it 'flashes an error' do
+        get user_story_path(user_story)
+        expect(flash[:alert]).to be_present
+      end
+    end
+  end
 end

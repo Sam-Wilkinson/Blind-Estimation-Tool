@@ -91,12 +91,15 @@ en:
           destroy: "Close room"
           edit: "Edit"
           create: "Create"
+          close: "Close"
+          show: "Show"
           user_story:
             create: "Create user story"
-          close: "Close"
         other_users:
           no_users: "You are alone in this room"
           call_to_action: "Invite others to join!"
+        user_stories:
+          no_stories: "There are no stories in this room"
       actions:
         join_room: 
           success: "Welcome!"
@@ -165,3 +168,6 @@ en:
         update: "Update"
       user_story:
         create: "Create User Story"
+      user_stores:
+        title: "Title"
+        description: "Description"
