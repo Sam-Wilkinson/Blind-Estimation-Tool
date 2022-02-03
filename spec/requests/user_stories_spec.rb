@@ -115,4 +115,39 @@ RSpec.describe 'UserStories', type: :request do
       end
     end
   end
+
+  describe 'PATCH /user_story' do
+    let(:user) { create(:user) }
+    let(:room) { create(:room, admin: user) }
+    let(:user_story) { create(:user_story, room: room) }
+
+    before do
+      sign_in(user)
+    end
+
+    it 'updates estimation of the user_story' do
+      patch user_story_path(user_story,
+                            params: { room_id: room.id, user_story: { title: user_story.title, description: "#{user_story.description}a" } })
+      expect(UserStory.find(user_story.id).description).not_to eq(user_story.description)
+      expect(UserStory.find(user_story.id).description).to eq("#{user_story.description}a")
+    end
+
+    it 'updates the title of the user_story' do
+      patch user_story_path(user_story,
+                            params: { room_id: room.id, user_story: { title: "#{user_story.title}a", description: user_story.description } })
+      expect(UserStory.find(user_story.id).title).not_to eq(user_story.title)
+      expect(UserStory.find(user_story.id).title).to eq("#{user_story.title}a")
+    end
+
+    it 'redirects to the user story show page' do
+      patch user_story_path(user_story, params: { room_id: room.id, user_story: { title: user_story.title, description: user_story.description } })
+      expect(response).to redirect_to user_story
+    end
+
+    it 'flashes a success message' do
+      patch user_story_path(user_story, params: { room_id: room.id, user_story: { title: user_story.title, description: user_story.description } })
+      follow_redirect!
+      expect(flash[:notice]).to be_present
+    end
+  end
 end

@@ -23,6 +23,14 @@ class UserStoriesController < ApplicationController
     end
   end
 
+  def update
+    if @user_story.update(user_story_params)
+      redirect_to user_story_path, notice: t('views.estimations.values.flash_messages.update.success')
+    else
+      redirect_to user_story_path, alert: t('views.estimations.values.flash_messages.update.failure')
+    end
+  end
+
   private
 
   def user_story_params

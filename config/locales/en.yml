@@ -123,6 +123,9 @@ en:
           denied: "You do not have permission to remove a user from a room"
           failure: "I am sorry, it did not work"
     user_stories:
+      show:
+        buttons:
+          update: "Update User Story"
       actions:
         create:
           success: "The user story has been created"
@@ -168,6 +171,7 @@ en:
         update: "Update"
       user_story:
         create: "Create User Story"
+        update: "Update"
       user_stores:
         title: "Title"
         description: "Description"

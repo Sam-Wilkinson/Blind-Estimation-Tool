@@ -1,4 +1,10 @@
+<%= render partial: 'modal', locals: { user_story: @user_story, modalName: 'updateModal', room_id: @user_story.room.id} %>
 <div class="container-fluid">
   <h1><%= @user_story.title %></h1>
   <p><%= @user_story.description %></p>
+  <% if @user_story.room.admin == current_user %>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal">
+    <%= t('views.user_stories.show.buttons.update') %>
+  </button>
+  <% end %>
 </div>
