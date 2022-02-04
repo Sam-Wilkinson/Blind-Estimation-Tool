@@ -1,4 +1,6 @@
 class EstimationValue < ApplicationRecord
+  default_scope { order(placement: :asc) }
+
   validates :value, uniqueness: true, presence: true
   validates :placement, uniqueness: true, presence: true
 

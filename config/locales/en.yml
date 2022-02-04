@@ -125,10 +125,13 @@ en:
     user_stories:
       show:
         buttons:
-          update: "Update User Story"
-          delete: "Delete User Story"
+          update: "Update"
+          delete: "Delete"
+          estimate: "Estimate"
         confirmations:
           delete: "Are you sure you want to delete this user story?"
+        content:
+          estimation: "Estimation"
       actions:
         create:
           success: "The user story has been created"

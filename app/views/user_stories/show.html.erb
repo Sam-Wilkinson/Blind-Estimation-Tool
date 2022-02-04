@@ -1,11 +1,43 @@
 <%= render partial: 'modal', locals: { user_story: @user_story, modalName: 'updateModal', room_id: @user_story.room.id} %>
 <div class="container-fluid">
-  <h1><%= @user_story.title %></h1>
-  <p><%= @user_story.description %></p>
-  <% if @user_story.room.admin == current_user %>
-  <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#updateModal">
-    <%= t('views.user_stories.show.buttons.update') %>
-  </button><br/>
-    <%= link_to t('views.user_stories.show.buttons.delete'), user_story_path(@user_story), method: :delete, data: {confirm: t('views.user_stories.show.confirmations.delete'),}, class: 'btn btn-danger m-1'%>
-  <% end %>
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title"><%= @user_story.title %></h5>
+      <p class="card-text"><%= @user_story.description %></p>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <% if @estimation.new_record? %>
+            <%= form_with model: @estimation do |f| %>
+              <div class="row align-items-center">
+                <%= f.hidden_field :user_story_id, value: @user_story.id %>
+                <%= f.hidden_field :user_id, value: current_user.id %>
+                <div class="col-auto">
+                  <%= f.select :estimation_value_id, @estimation_values.collect { |ev| [ev.value, ev.id] }  %><br/>
+                </div>
+                <div class="col-auto">
+                  <%= f.submit t('views.user_stories.show.buttons.estimate'), class: 'btn btn-info' %>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <%= t('views.user_stories.show.content.estimation') %> : <%= @estimation.estimation_value.value %>
+          <% end %>
+        </li>
+        <% if @user_story.room.admin == current_user %>
+          <li class="list-group-item">
+            <div class="row align-items-center justify-content-between">
+              <div class="col-auto">
+                <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#updateModal">
+                  <%= t('views.user_stories.show.buttons.update') %>
+                </button>
+              </div>
+              <div class="col-auto">
+                <%= link_to t('views.user_stories.show.buttons.delete'), user_story_path(@user_story), method: :delete, data: {confirm: t('views.user_stories.show.confirmations.delete'),}, class: 'btn btn-danger m-1'%>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 </div>
