@@ -18,6 +18,7 @@ class UserStoriesController < ApplicationController
   def show
     @estimation_values = EstimationValue.order(placement: :asc)
     @estimation = current_user.estimations.find_or_initialize_by(user_story: @user_story)
+    @estimations = @user_story.estimations.all
 
     if @user_story.room.include?(current_user)
       render 'show'

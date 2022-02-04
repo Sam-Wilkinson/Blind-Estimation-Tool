@@ -2,32 +2,30 @@ require 'rails_helper'
 
 RSpec.describe 'user_stories/show', type: :view do
   let(:user) { create(:user) }
-  let(:admin) { create(:user) }
-  let(:room) { create(:room, admin: admin) }
-  let(:user_story) { create(:user_story, room: room) }
-  let!(:estimation_value) { create(:estimation_value) }
+  let(:user_story) { create(:user_story) }
 
   before do
     assign(:user_story, user_story)
-    assign(:estimation_values, EstimationValue.order(placement: :asc))
+    assign(:estimation_values, EstimationValue.all)
     assign(:estimation, Estimation.new)
-    room.users << user
+    assign(:estimations, Estimation.all)
   end
 
   context 'when user is not the room admin' do
     before do
       allow(view).to receive(:current_user).and_return(user)
-      assign(:estimation, Estimation.new)
     end
 
     it 'displays the user_story title' do
+      user_story.update(title: 'This is the title of the user story: Cowabunga')
       render
-      expect(rendered).to match(user_story.title)
+      expect(rendered).to match('This is the title of the user story: Cowabunga')
     end
 
-    it 'can display the user story description' do
+    it 'displays the user story description' do
+      user_story.update(description: 'This is the description of a user story: Why does a cow have four legs, I must find out somehow, he doesnt know, she doesnt know, and neither does the cow, hey!')
       render
-      expect(rendered).to match(user_story.description)
+      expect(rendered).to match('This is the description of a user story: Why does a cow have four legs, I must find out somehow, he doesnt know, she doesnt know, and neither does the cow, hey!')
     end
 
     it 'displays the estimate button' do
@@ -35,27 +33,52 @@ RSpec.describe 'user_stories/show', type: :view do
       expect(rendered).to match(t('views.user_stories.show.buttons.estimate'))
     end
 
-    it 'displays the available estimations' do
+    it 'displays the available estimation values' do
+      estimation_value = create(:estimation_value, value: 112)
+      assign(:estimation_values, [estimation_value])
       render
-      expect(rendered).to match(estimation_value.value.to_s)
+      expect(rendered).to match(112.to_s)
+    end
+
+    it 'displays the users who are required to estimate' do
+      user.update(username: 'Samwise')
+      user_story.room.users << user
+      user_story.room.admin = create(:user, username: 'Gandalf')
+      render
+      expect(rendered).to match('Samwise')
+      expect(rendered).to match('Gandalf')
+    end
+
+    it 'displays the user who has estimated in green' do
+      estimation = create(:estimation, user: user, user_story: user_story)
+      user_story.room.users << user
+      render
+      expect(rendered).to match('list-group-item-success')
+    end
+
+    it 'displays the user who has not estimated in red' do
+      user_story.room.users << user
+      render
+      expect(rendered).to match('list-group-item-danger')
     end
   end
 
   context 'when the user has estimated' do
-    before do
-      allow(view).to receive(:current_user).and_return(user)
-      assign(:estimation, create(:estimation, user: user, user_story: user_story, estimation_value: estimation_value))
-    end
-
     it 'shows the estimated value of the user story' do
+      allow(view).to receive(:current_user).and_return(user)
+      estimation_value = create(:estimation_value, value: 667)
+      estimation = create(:estimation, user: user, user_story: user_story, estimation_value: estimation_value)
+      assign(:estimation, estimation)
       render
-      expect(rendered).to match(estimation_value.value.to_s)
+      expect(rendered).to match(667.to_s)
     end
   end
 
   context 'when user is room admin' do
     before do
+      admin = create(:user)
       allow(view).to receive(:current_user).and_return(admin)
+      user_story.room.admin = admin
     end
 
     it 'displays the update user story' do
