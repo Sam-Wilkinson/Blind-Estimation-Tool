@@ -83,17 +83,48 @@ RSpec.describe UserStory, type: :model do
         expect(described_class.find(user_story.id).estimation_value).not_to eq(estimation_value1)
         expect(described_class.find(user_story.id).estimation_value).not_to eq(estimation_value2)
       end
-    end
 
-    context 'when the users have not yet estimated' do
-      it 'does not set the user story estimation value' do
+      it 'marks the user story as estimated' do
         user = create(:user)
         admin = create(:user)
         room = create(:room, admin: admin)
         room.users << user
         user_story = create(:user_story, room: room)
+        estimation_value1 = create(:estimation_value, placement: 3)
+        estimation_value2 = create(:estimation_value, placement: 5)
+        create(:estimation, user: admin, user_story: user_story, estimation_value: estimation_value1)
+        create(:estimation, user: user, user_story: user_story, estimation_value: estimation_value2)
+
         user_story.update_consensus
-        expect(described_class.find(user_story.id).estimation_value).to eq(nil)
+        user_story.reload
+        expect(user_story.isEstimated).to be_truthy
+        expect(user_story.isEstimated).not_to be_falsey
+      end
+    end
+
+    context 'when the users have not yet estimated' do
+      it 'does not change the user story estimation value' do
+        user_story = create(:user_story)
+        user_story.update_consensus
+        expect(described_class.find(user_story.id).estimation_value).to be_nil
+        estimation_value = create(:estimation_value)
+        user_story.update(estimation_value: estimation_value)
+        user_story.update_consensus
+        expect(described_class.find(user_story.id).estimation_value).to eq(estimation_value)
+      end
+
+      it 'does not change the user story estimation status' do
+        user_story = create(:user_story, isEstimated: false)
+        user_story.update_consensus
+        user_story.reload
+        expect(user_story.isEstimated).not_to be_truthy
+        expect(user_story.isEstimated).to be_falsey
+
+        user_story.update(isEstimated: true)
+        user_story.update_consensus
+        user_story.reload
+        expect(user_story.isEstimated).not_to be_falsey
+        expect(user_story.isEstimated).to be_truthy
       end
     end
   end

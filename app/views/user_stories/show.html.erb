@@ -51,11 +51,19 @@
     </div>
   </div>
   <ul class="list-group my-2" style="width: 18rem;">
-    <li class='list-group-item list-group-item-<%= @estimations.find_by(user: @user_story.room.admin) ? :success : :danger %>'><%= @user_story.room.admin.username %></li>
+    <li class='list-group-item list-group-item-<%= @estimations.find_by(user: @user_story.room.admin) ? :success : :danger %>'>
+        <%= @user_story.room.admin.username %>
+        <% if @user_story.isEstimated %>
+        : <%= @estimations.find_by(user: @user_story.room.admin).estimation_value.value %>
+        <% end %>
+    </li>
     <% @user_story.room.users.each do |user| %>
       <li class="list-group-item list-group-item-<%= @estimations.find_by(user: user) ? :success : :danger %>" >
         <%= user.username %>
-      </li>
+        <% if @user_story.isEstimated %>
+        : <%= @estimations.find_by(user: user).estimation_value.value %>
+        <% end %>
+    </li>
     <% end %>
   </ul>
 </div>

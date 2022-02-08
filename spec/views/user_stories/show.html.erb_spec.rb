@@ -115,4 +115,25 @@ RSpec.describe 'user_stories/show', type: :view do
       expect(rendered).to match(t('views.user_stories.show.buttons.restart'))
     end
   end
+
+  context 'when the user story has been estimated' do
+    before do
+      allow(view).to receive(:current_user).and_return(user)
+    end
+
+    it 'displays the estimations of the users' do
+      user_story.update(isEstimated: true)
+      user_story.room.users << user
+      user2 = create(:user)
+      user_story.room.users << user2
+      create(:estimation, user_story: user_story, user: user, estimation_value: create(:estimation_value, value: 141))
+      create(:estimation, user_story: user_story, user: user_story.room.admin, estimation_value: create(:estimation_value, value: 226))
+      create(:estimation, user_story: user_story, user: user2, estimation_value: create(:estimation_value, value: 909))
+
+      render
+      expect(rendered).to match(141.to_s)
+      expect(rendered).to match(226.to_s)
+      expect(rendered).to match(909.to_s)
+    end
+  end
 end
