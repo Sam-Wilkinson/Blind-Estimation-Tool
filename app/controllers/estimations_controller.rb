@@ -5,6 +5,8 @@ class EstimationsController < ApplicationController
   def create
     estimation = Estimation.new(estimation_params)
     msg = if estimation.save
+            user_story = UserStory.find(estimation_params[:user_story_id])
+            user_story.update_consensus
             { notice: 'Estimation saved successfully' }
           else
             { alert: 'Estimation failed to save' }

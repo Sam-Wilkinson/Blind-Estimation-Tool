@@ -131,7 +131,8 @@ en:
         confirmations:
           delete: "Are you sure you want to delete this user story?"
         content:
-          estimation: "Estimation"
+          estimation: "Your estimation"
+          final_estimation: "Group estimation"
       actions:
         create:
           success: "The user story has been created"

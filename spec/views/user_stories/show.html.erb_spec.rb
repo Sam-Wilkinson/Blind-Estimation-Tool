@@ -50,7 +50,7 @@ RSpec.describe 'user_stories/show', type: :view do
     end
 
     it 'displays the user who has estimated in green' do
-      estimation = create(:estimation, user: user, user_story: user_story)
+      create(:estimation, user: user, user_story: user_story)
       user_story.room.users << user
       render
       expect(rendered).to match('list-group-item-success')
@@ -89,6 +89,18 @@ RSpec.describe 'user_stories/show', type: :view do
     it 'displays the delete user story button' do
       render
       expect(rendered).to match(t('views.user_stories.show.buttons.delete'))
+    end
+  end
+
+  context 'when the user story has been successfully estimated' do
+    before do
+      allow(view).to receive(:current_user).and_return(user)
+    end
+
+    it 'displays the user story in green' do
+      user_story.estimation_value = create(:estimation_value)
+      render
+      expect(rendered).to match('bg-success')
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_03_141901) do
+ActiveRecord::Schema.define(version: 2022_02_08_094011) do
 
   create_table "estimation_values", force: :cascade do |t|
     t.integer "value"
@@ -57,6 +57,9 @@ ActiveRecord::Schema.define(version: 2022_02_03_141901) do
     t.integer "room_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "estimation_value_id"
+    t.boolean "isEstimated", default: false
+    t.index ["estimation_value_id"], name: "index_user_stories_on_estimation_value_id"
     t.index ["room_id"], name: "index_user_stories_on_room_id"
     t.index ["title", "room_id"], name: "index_user_stories_on_title_and_room_id", unique: true
   end
@@ -82,5 +85,6 @@ ActiveRecord::Schema.define(version: 2022_02_03_141901) do
   add_foreign_key "room_users", "rooms"
   add_foreign_key "room_users", "users"
   add_foreign_key "rooms", "users"
+  add_foreign_key "user_stories", "estimation_values"
   add_foreign_key "user_stories", "rooms"
 end

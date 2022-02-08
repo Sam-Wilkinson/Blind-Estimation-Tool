@@ -1,11 +1,11 @@
 <%= render partial: 'modal', locals: { user_story: @user_story, modalName: 'updateModal', room_id: @user_story.room.id} %>
 <div class="container-fluid">
-  <div class="card" style="width: 18rem;">
+  <div class="card <%= @user_story.estimation_value ? 'bg-success' : '' %>" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title"><%= @user_story.title %></h5>
       <p class="card-text"><%= @user_story.description %></p>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">
+        <li class="list-group-item <%= @user_story.estimation_value ? 'bg-success' : '' %>">
           <% if @estimation.new_record? %>
             <%= form_with model: @estimation do |f| %>
               <div class="row align-items-center">
@@ -23,8 +23,13 @@
             <%= t('views.user_stories.show.content.estimation') %> : <%= @estimation.estimation_value.value %>
           <% end %>
         </li>
+        <% if @user_story.estimation_value %>
+          <li class="list-group-item <%= @user_story.estimation_value ? 'bg-success' : '' %>">
+            <%= t('views.user_stories.show.content.final_estimation')%> : <%= @user_story.estimation_value.value %>
+          </li>
+        <% end %>
         <% if @user_story.room.admin == current_user %>
-          <li class="list-group-item">
+          <li class="list-group-item <%= @user_story.estimation_value ? 'bg-success' : '' %>">
             <div class="row align-items-center justify-content-between">
               <div class="col-auto">
                 <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#updateModal">
