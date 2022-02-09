@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   resources :estimations
   resources :estimation_values
   resources :user_stories
+  patch 'user_story/:id/restart', to: 'user_stories#restart',as: 'restart_user_story'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

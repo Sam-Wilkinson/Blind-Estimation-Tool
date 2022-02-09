@@ -1,18 +1,18 @@
 class UserStoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :authenticate_admin_status, except: %i[show destroy]
+  before_action :authenticate_admin_status, except: %i[show destroy restart]
   before_action :set_requested_user_story_value, except: %i[create]
 
   def create
     user_story = UserStory.new(user_story_params)
     room = Room.find(params[:room_id])
     user_story.room = room
-    msg = if user_story.save
-            { notice: t('views.user_stories.actions.create.success') }
-          else
-            { warning: t('views.user_stories.actions.create.failure') }
-          end
-    redirect_to room_path(room), msg
+    flash_message = if user_story.save
+                      { notice: t('views.user_stories.actions.create.success') }
+                    else
+                      { warning: t('views.user_stories.actions.create.failure') }
+                    end
+    redirect_to room_path(room), flash_message
   end
 
   def show
@@ -40,6 +40,20 @@ class UserStoriesController < ApplicationController
     redirect_to room, alert: t('views.user_stories.access.denied') unless current_user == room.admin
     @user_story.destroy
     redirect_to room, notice: t('views.user_stories.flash_messages.delete.success')
+  end
+
+  def restart
+    room = @user_story.room
+    return redirect_to room, alert: t('views.user_stories.access.denied') unless current_user == room.admin
+
+    if @user_story.estimation_value
+      flash_message = { alert: t('views.user_stories.flash_messages.restart.consensus_found') }
+    else
+      @user_story.delete_estimations
+      @user_story.update(isEstimated: false)
+      flash_message = { warning: t('views.user_stories.flash_messages.restart.success') }
+    end
+    redirect_to @user_story, flash_message
   end
 
   private

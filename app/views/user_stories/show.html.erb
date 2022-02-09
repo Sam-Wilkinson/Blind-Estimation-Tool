@@ -29,6 +29,11 @@
           </li>
         <% end %>
         <% if @user_story.room.admin == current_user %>
+          <%if @user_story.estimation_value.nil? %>
+            <li class="list-group-item <%= @user_story.estimation_value ? 'bg-success' : '' %>">
+              <%= link_to t('views.user_stories.show.buttons.restart'), restart_user_story_path(@user_story), method: :patch, data: {confirm: t('views.user_stories.show.confirmations.restart'),}, class: 'btn btn-warning m-1'%>
+            </li>
+          <% end %>
           <li class="list-group-item <%= @user_story.estimation_value ? 'bg-success' : '' %>">
             <div class="row align-items-center justify-content-between">
               <div class="col-auto">

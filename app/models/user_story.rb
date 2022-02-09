@@ -26,4 +26,8 @@ class UserStory < ApplicationRecord
       update(estimation_value: nil)
     end
   end
+
+  def delete_estimations
+    estimations.delete_all
+  end
 end

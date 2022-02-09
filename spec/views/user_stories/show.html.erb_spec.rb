@@ -103,4 +103,16 @@ RSpec.describe 'user_stories/show', type: :view do
       expect(rendered).to match('bg-success')
     end
   end
+
+  context 'when a consensus has not been reached' do
+    it 'displays the restart button for the admin' do
+      admin = create(:user)
+      create(:estimation, user: admin)
+      user_story.room.update(admin: admin)
+      allow(view).to receive(:current_user).and_return(admin)
+      user_story.update(estimation_value: nil)
+      render
+      expect(rendered).to match(t('views.user_stories.show.buttons.restart'))
+    end
+  end
 end

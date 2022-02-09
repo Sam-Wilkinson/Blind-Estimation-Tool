@@ -97,4 +97,14 @@ RSpec.describe UserStory, type: :model do
       end
     end
   end
+
+  describe 'delete_estimations' do
+    it 'destroys all the estimations on the user_story' do
+      user_story = create(:user_story)
+      user_story.estimations << create(:estimation, user_story: user_story)
+      user_story.delete_estimations
+      user_story.reload
+      expect(user_story.estimations).to be_empty
+    end
+  end
 end

@@ -176,4 +176,69 @@ RSpec.describe 'UserStories', type: :request do
       expect(flash[:notice]).to be_present
     end
   end
+
+  describe 'PATCH /user_story/:id/restart' do
+    let(:user) { create(:user) }
+    let(:room) { create(:room, admin: user) }
+    let(:user_story) { create(:user_story, room: room) }
+
+    before do
+      sign_in(user)
+    end
+
+    context 'when the user is not admin' do
+      before do
+        sign_in(create(:user))
+      end
+
+      it 'redirects to the room page' do
+        patch restart_user_story_path(user_story)
+        expect(response).to redirect_to room_path
+      end
+
+      it 'sets an alert flash' do
+        patch restart_user_story_path(user_story)
+        expect(flash[:alert]).to be_present
+      end
+    end
+
+    context 'when a user story has an estimation value' do
+      before do
+        user_story.update(estimation_value: create(:estimation_value))
+      end
+
+      it 'sets an alert flash' do
+        patch restart_user_story_path(user_story)
+        expect(flash[:alert]).to be_present
+      end
+    end
+
+    it 'removes all the user_story estimations' do
+      user_story.update(estimation_value: nil)
+      user_story.estimations << create(:estimation, user_story: user_story)
+      patch restart_user_story_path(user_story)
+      user_story.reload
+      expect(user_story.estimations).to be_empty
+    end
+
+    it 'sets the user_story isEstimated to false' do
+      user_story.update(estimation_value: nil)
+      user_story.update(isEstimated: true)
+      patch restart_user_story_path(user_story)
+      user_story.reload
+      expect(user_story.isEstimated).to be(false)
+    end
+
+    it 'sets a warning flash' do
+      user_story.update(estimation_value: nil)
+      patch restart_user_story_path(user_story)
+      expect(flash[:warning]).to be_present
+    end
+
+    it 'redirects to user_story show' do
+      user_story.update(estimation_value: nil)
+      patch restart_user_story_path(user_story)
+      expect(response).to redirect_to user_story
+    end
+  end
 end
