@@ -122,7 +122,7 @@ RSpec.describe 'user_stories/show', type: :view do
     end
 
     it 'displays the estimations of the users' do
-      user_story.update(isEstimated: true)
+      user_story.update(is_estimated: true)
       user_story.room.users << user
       user2 = create(:user)
       user_story.room.users << user2

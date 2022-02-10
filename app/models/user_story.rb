@@ -19,7 +19,7 @@ class UserStory < ApplicationRecord
 
     minimum_estimation_placement = EstimationValue.joins(:estimations).where('estimations.user_story' => self).minimum(:placement)
     maximum_estimation_placement = EstimationValue.joins(:estimations).where('estimations.user_story' => self).maximum(:placement)
-    update(isEstimated: true)
+    update(is_estimated: true)
 
     if maximum_estimation_placement - minimum_estimation_placement <= 1
       update(estimation_value: EstimationValue.find_by(placement: maximum_estimation_placement))

@@ -97,8 +97,8 @@ RSpec.describe UserStory, type: :model do
 
         user_story.update_consensus
         user_story.reload
-        expect(user_story.isEstimated).to be_truthy
-        expect(user_story.isEstimated).not_to be_falsey
+        expect(user_story.is_estimated).to be_truthy
+        expect(user_story.is_estimated).not_to be_falsey
       end
     end
 
@@ -114,17 +114,17 @@ RSpec.describe UserStory, type: :model do
       end
 
       it 'does not change the user story estimation status' do
-        user_story = create(:user_story, isEstimated: false)
+        user_story = create(:user_story, is_estimated: false)
         user_story.update_consensus
         user_story.reload
-        expect(user_story.isEstimated).not_to be_truthy
-        expect(user_story.isEstimated).to be_falsey
+        expect(user_story.is_estimated).not_to be_truthy
+        expect(user_story.is_estimated).to be_falsey
 
-        user_story.update(isEstimated: true)
+        user_story.update(is_estimated: true)
         user_story.update_consensus
         user_story.reload
-        expect(user_story.isEstimated).not_to be_falsey
-        expect(user_story.isEstimated).to be_truthy
+        expect(user_story.is_estimated).not_to be_falsey
+        expect(user_story.is_estimated).to be_truthy
       end
     end
   end

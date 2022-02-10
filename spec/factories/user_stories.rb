@@ -4,6 +4,6 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph(sentence_count: 2, random_sentences_to_add: 3) }
     room
     estimation_value { nil }
-    isEstimated { false }
+    is_estimated { false }
   end
 end

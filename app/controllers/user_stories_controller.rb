@@ -50,7 +50,7 @@ class UserStoriesController < ApplicationController
       flash_message = { alert: t('views.user_stories.flash_messages.restart.consensus_found') }
     else
       @user_story.delete_estimations
-      @user_story.update(isEstimated: false)
+      @user_story.update(is_estimated: false)
       flash_message = { warning: t('views.user_stories.flash_messages.restart.success') }
     end
     redirect_to @user_story, flash_message

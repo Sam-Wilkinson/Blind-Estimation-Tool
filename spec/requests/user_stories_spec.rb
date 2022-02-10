@@ -221,12 +221,12 @@ RSpec.describe 'UserStories', type: :request do
       expect(user_story.estimations).to be_empty
     end
 
-    it 'sets the user_story isEstimated to false' do
+    it 'sets the user_story is_estimated to false' do
       user_story.update(estimation_value: nil)
-      user_story.update(isEstimated: true)
+      user_story.update(is_estimated: true)
       patch restart_user_story_path(user_story)
       user_story.reload
-      expect(user_story.isEstimated).to be(false)
+      expect(user_story.is_estimated).to be(false)
     end
 
     it 'sets a warning flash' do
