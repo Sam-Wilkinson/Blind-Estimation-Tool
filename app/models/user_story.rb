@@ -25,6 +25,7 @@ class UserStory < ApplicationRecord
       update(estimation_value: EstimationValue.find_by(placement: maximum_estimation_placement))
     else
       update(estimation_value: nil)
+      ConsensusMailer.with(user_story: self).consensus_failed_email.deliver_later
     end
   end
 

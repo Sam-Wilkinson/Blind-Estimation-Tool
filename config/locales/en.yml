@@ -154,6 +154,11 @@ en:
         restart:
           success: "User story has been reset"
           consensus_found: "No need to restart the user story estimations, a consensus has been found"
+    mailer:
+      consensus_failed:
+        subject: "A user story consensus has failed"
+        title: "The user story: ' %{title} ' failed to reach a consensus"
+        no_available_description: "No available description"
   users:
     options:
       edit: "Edit"
@@ -166,6 +171,7 @@ en:
       room: "Room"
       estimations:
         values: "EstimationValue"
+        estimation: "Estimation"
       user_story: "User Story"
     attributes:
       room:
@@ -178,6 +184,10 @@ en:
         values:
           value: "Value"
           placement: "Placement"
+      user_story:
+        title: "Title"
+        description: "Description"
+        estimations: "Estimations"
       room:
         name: "Name"
         admin: "Admin"

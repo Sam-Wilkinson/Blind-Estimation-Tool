@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p><%= t('views.mailer.consensus_failed.title', title: @user_story.title) %></p>
+    <p><%= t('active_record.attributes.user_story.description') %>: 
+      <%= if @user_story.description.empty?
+        t('views.mailer.consensus_failed.no_available_description')
+      else
+        @user_story.description
+      end %>
+    </p>
+    <p><%=t('active_record.models.room')%>: <%= @user_story.room.name %></p>
+    <p> <%=t('active_record.attributes.user_story.estimations')%>: </p>
+    <ul>
+      <% @user_story.estimations.each do |estimation| %>
+        <li>
+          <%= estimation.user.username %> : <%= estimation.estimation_value.value %>
+        </li>
+      <% end %>
+    </ul>
+  </body>
+</html>
